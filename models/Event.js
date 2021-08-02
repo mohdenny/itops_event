@@ -18,19 +18,44 @@ const EventSchema = new Schema ({
     description: {
         type: String
     },
-    items: {
-        type: [String],
-        required: true
-    },
-    support: {
-        type: [String]
-    },
+    items: [
+        {
+            name: {
+                type: String,
+                required: true
+            },
+            fa: {
+                type: String
+            },
+            brand: {
+                type: String
+            },
+            type: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: String
+            }
+        }
+    ],
+    support: [
+        {
+            user: {
+                type: Schema.Types.ObjectId
+            }
+        }
+    ],
     from: {
         type: Date,
         required: true
     },
     to: {
         type: Date
+    },
+    location: {
+        type: String,
+        required: true
     },
     status: {
         type: Boolean,

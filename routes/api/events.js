@@ -6,6 +6,7 @@ const auth = require('../../middleware/auth');
 const Event = require('../../models/Event');
 const User = require('../../models/User');
 const checkObjectId = require('../../middleware/checkObjectId');
+const { events } = require('../../models/Event');
 
 // @route    POST api/events
 // @desc     Create a event
@@ -13,9 +14,8 @@ const checkObjectId = require('../../middleware/checkObjectId');
 router.post(
     '/',
     auth,
-    check('title', 'Title Event is required').notEmpty(),
-    check('support', 'Support is required').notEmpty(),
-    check('items', 'Items is required').notEmpty(),
+    check('title', 'Title is required').notEmpty(),
+    check('location', 'Location is required').notEmpty(),
     check('from', 'From date is required and needs to be from the past')
         .notEmpty()
         .custom((value, { req }) => (req.body.to ? value < req.body.to : true)),
@@ -28,18 +28,15 @@ router.post(
     try {
         const user = await User.findById(req.user.id).select('-password');
 
+        // build a event
         const newEvent = new Event({
+            user: req.user.id,
             title: req.body.title,
-            description: req.body.description,
             name: user.name,
             avatar: user.avatar,
-            user: req.user.id,
-            support: Array.isArray(req.body.support)
-                ? support
-                : support.split(',').map((sprt) => ' ' + sprt.trim()),
-            items: Array.isArray(req.body.items)
-                ? items
-                : items.split(',').map((item) => ' ' + item.trim())
+            description: req.body.description,
+            location: req.body.location,
+            from: req.body.from
         });
 
         const post = await newEvent.save();
@@ -52,181 +49,121 @@ router.post(
 }
 );
   
-// @route    GET api/posts
-// @desc     Get all posts
+// @route    GET api/events
+// @desc     Get all events
 // @access   Private
 router.get('/', auth, async (req, res) => {
     try {
-        const posts = await Post.find().sort({ date: -1 });
-        res.json(posts);
+        const events = await Event.find().sort({ date: -1 });
+        res.json(events);
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
   
-// // @route    GET api/posts/:id
-// // @desc     Get post by ID
-// // @access   Private
-// router.get('/:id', auth, checkObjectId('id'), async (req, res) => {
-//     try {
-//         const post = await Post.findById(req.params.id);
+// @route    GET api/events/:id
+// @desc     Get event by ID
+// @access   Private
+router.get('/:id', auth, checkObjectId('id'), async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
 
-//         if (!post) {
-//             return res.status(404).json({ msg: 'Post not found' });
-//         }
+    if (!event) {
+        return res.status(404).json({ msg: 'Event not found' });
+    }
 
-//         res.json(post);
-//     } catch (err) {
-//         console.error(err.message);
+        res.json(event);
+    } catch (err) {
+        console.error(err.message);
 
-//         res.status(500).send('Server Error');
-//     }
-// });
-  
-//   // @route    DELETE api/posts/:id
-//   // @desc     Delete a post
-//   // @access   Private
-//   router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
-//     try {
-//         const post = await Post.findById(req.params.id);
+        res.status(500).send('Server Error');
+    }
+});
 
-//         if (!post) {
-//             return res.status(404).json({ msg: 'Post not found' });
-//         }
+// @route    DELETE api/event/:id
+// @desc     Delete a event
+// @access   Private
+router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+    
+        if (!event) {
+            return res.status(404).json({ msg: 'Event not found' });
+        }
+    
+        // Check user
+        if (event.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Event not authorized' });
+        }
+    
+        await event.remove();
+    
+        res.json({ msg: 'Event removed' });
+    } catch (err) {
+        console.error(err.message);
+    
+        res.status(500).send('Server Error');
+    }
+});
 
-//         // Check user
-//         if (post.user.toString() !== req.user.id) {
-//             return res.status(401).json({ msg: 'User not authorized' });
-//         }
+// @route    PUT api/events/item
+// @desc     Add events item
+// @access   Private
+router.put(
+    '/item',
+    auth,
+    check('name', 'Item name is required').notEmpty(),
+    check('type', 'Type is required').notEmpty(),
+    check('quantity', 'Quantity is required').notEmpty(),
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+    
+        try {
+            const event = await Event.findOne({ user: req.user.id });
+    
+            // avoid fa double
+            const checkFa = await Event.findOne({ fa: req.user.fa });
 
-//         await post.remove();
+            if (checkFa) {
+                return res
+                .status(400)
+                .json({ errors: [{ msg: 'FA  already exists' }] });
+            }
 
-//         res.json({ msg: 'Post removed' });
-//     } catch (err) {
-//         console.error(err.message);
+            event.items.unshift(req.body);
+    
+            await event.save();
+    
+            res.json(event);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    }
+);
 
-//         res.status(500).send('Server Error');
-//     }
-// });
-  
-// // @route    PUT api/posts/like/:id
-// // @desc     Like a post
-// // @access   Private
-// router.put('/like/:id', auth, checkObjectId('id'), async (req, res) => {
-//     try {
-//         const post = await Post.findById(req.params.id);
-    
-//         // Check if the post has already been liked
-//         if (post.likes.some((like) => like.user.toString() === req.user.id)) {
-//             return res.status(400).json({ msg: 'Post already liked' });
-//         }
-    
-//         post.likes.unshift({ user: req.user.id });
-    
-//         await post.save();
-    
-//         return res.json(post.likes);
-//     } catch (err) {
-//         console.error(err.message);
-//         res.status(500).send('Server Error');
-//     }
-// });
-  
-// // @route    PUT api/posts/unlike/:id
-// // @desc     Unlike a post
-// // @access   Private
-// router.put('/unlike/:id', auth, checkObjectId('id'), async (req, res) => {
-//     try {
-//         const post = await Post.findById(req.params.id);
-    
-//         // Check if the post has not yet been liked
-//         if (!post.likes.some((like) => like.user.toString() === req.user.id)) {
-//             return res.status(400).json({ msg: 'Post has not yet been liked' });
-//         }
-    
-//         // remove the like
-//         post.likes = post.likes.filter(
-//             ({ user }) => user.toString() !== req.user.id
-//         );
-    
-//         await post.save();
-    
-//         return res.json(post.likes);
-//     } catch (err) {
-//         console.error(err.message);
-//         res.status(500).send('Server Error');
-//     }
-// });
-  
-// // @route    POST api/posts/comment/:id
-// // @desc     Comment on a post
-// // @access   Private
-// router.post(
-//     '/comment/:id',
-//     auth,
-//     checkObjectId('id'),
-//     check('text', 'Text is required').notEmpty(),
-//     async (req, res) => {
-//         const errors = validationResult(req);
-//         if (!errors.isEmpty()) {
-//             return res.status(400).json({ errors: errors.array() });
-//         }
-    
-//         try {
-//             const user = await User.findById(req.user.id).select('-password');
-//             const post = await Post.findById(req.params.id);
-    
-//             const newComment = {
-//             text: req.body.text,
-//             name: user.name,
-//             avatar: user.avatar,
-//             user: req.user.id
-//             };
-    
-//             post.comments.unshift(newComment);
-    
-//             await post.save();
-    
-//             res.json(post.comments);
-//         } catch (err) {
-//             console.error(err.message);
-//             res.status(500).send('Server Error');
-//         }
-//     }
-// );
-  
-// // @route    DELETE api/posts/comment/:id/:comment_id
-// // @desc     Delete comment
-// // @access   Private
-// router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
-//     try {
-//         const post = await Post.findById(req.params.id);
-  
-//         // Pull out comment
-//         const comment = post.comments.find(
-//             (comment) => comment.id === req.params.comment_id
-//         );
-//         // Make sure comment exists
-//         if (!comment) {
-//             return res.status(404).json({ msg: 'Comment does not exist' });
-//         }
-//         // Check user
-//         if (comment.user.toString() !== req.user.id) {
-//             return res.status(401).json({ msg: 'User not authorized' });
-//         }
-    
-//         post.comments = post.comments.filter(
-//             ({ id }) => id !== req.params.comment_id
-//         );
-    
-//         await post.save();
-    
-//         return res.json(post.comments);
-//     } catch (err) {
-//         console.error(err.message);
-//         return res.status(500).send('Server Error');
-//     }
-// });
+// @route    DELETE api/events/item/:item_id
+// @desc     Delete item from events
+// @access   Private
+
+router.delete('/item/:item_id', auth, async (req, res) => {
+    try {
+        const foundEvent = await Event.findOne({ user: req.user.id });
+
+        foundEvent.items = foundEvent.items.filter(
+            (item) => item._id.toString() !== req.params.item_id
+    );
+
+        await foundEvent.save();
+        return res.status(200).json(foundEvent);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ msg: 'Server error' });
+    }
+});
 
 module.exports = router;
