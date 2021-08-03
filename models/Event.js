@@ -39,11 +39,15 @@ const EventSchema = new Schema ({
             }
         }
     ],
-    support: [
+    supports: [
         {
             user: {
                 type: Schema.Types.ObjectId
-            }
+            },
+            name: {
+                type: String,
+                required: true
+            },
         }
     ],
     from: {

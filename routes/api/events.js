@@ -124,15 +124,6 @@ router.put(
     
         try {
             const event = await Event.findOne({ user: req.user.id });
-    
-            // avoid fa double
-            const checkFa = await Event.findOne({ fa: req.user.fa });
-
-            if (checkFa) {
-                return res
-                .status(400)
-                .json({ errors: [{ msg: 'FA  already exists' }] });
-            }
 
             event.items.unshift(req.body);
     
@@ -164,6 +155,75 @@ router.delete('/item/:item_id', auth, async (req, res) => {
         console.error(error);
         return res.status(500).json({ msg: 'Server error' });
     }
+});
+
+// @route    POST api/events/support/:id
+// @desc     support on a post
+// @access   Private
+router.post(
+    '/support/:id',
+    auth,
+    checkObjectId('id'),
+    check('user', 'user is required').notEmpty(),
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+    
+        try {
+            const user = await User.findById(req.body.user).select('-password');
+            const event = await Event.findById(req.params.id);
+    
+            const newSupport = {
+                name: user.name,
+                avatar: user.avatar,
+                user: req.body.user
+            };
+    
+            event.supports.unshift(newSupport);
+    
+            await event.save();
+    
+            res.json(event.supports);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    }
+);
+
+// @route    DELETE api/events/support/:id/:support_id
+// @desc     Delete support
+// @access   Private
+router.delete('/support/:id/:support_id', auth, async (req, res) => {
+        try {
+        const event = await Event.findById(req.params.id);
+    
+        // Pull out support
+        const support = event.supports.find(
+            (support) => support.id === req.params.support_id
+        );
+        // Make sure support exists
+        if (!support) {
+            return res.status(404).json({ msg: 'Support does not exist' });
+        }
+        // Check user
+        if (support.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'Onduty support not authorized' });
+        }
+    
+        event.supports = event.supports.filter(
+            ({ id }) => id !== req.params.support_id
+        );
+    
+        await event.save();
+    
+        return res.json(event.supports);
+        } catch (err) {
+            console.error(err.message);
+            return res.status(500).send('Server Error');
+        }
 });
 
 module.exports = router;
