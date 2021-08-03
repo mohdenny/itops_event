@@ -20,7 +20,13 @@ const EventSchema = new Schema ({
     },
     items: [
         {
+            user: {
+                type: Schema.Types.ObjectId
+            },
             name: {
+                type: String
+            },
+            name_item: {
                 type: String,
                 required: true
             },
@@ -36,6 +42,10 @@ const EventSchema = new Schema ({
             },
             quantity: {
                 type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
             }
         }
     ],
@@ -48,6 +58,10 @@ const EventSchema = new Schema ({
                 type: String,
                 required: true
             },
+            date: {
+                type: Date,
+                default: Date.now
+            }
         }
     ],
     from: {

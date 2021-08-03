@@ -27,16 +27,16 @@ router.post(
 
     try {
         const user = await User.findById(req.user.id).select('-password');
+        const { title, description, location, from }= req.body;
 
-        // build a event
         const newEvent = new Event({
             user: req.user.id,
-            title: req.body.title,
+            title: title,
             name: user.name,
             avatar: user.avatar,
-            description: req.body.description,
-            location: req.body.location,
-            from: req.body.from
+            description: description,
+            location: location,
+            from: from
         });
 
         const post = await newEvent.save();
@@ -107,13 +107,13 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
     }
 });
 
-// @route    PUT api/events/item
+// @route    POST api/events/item/:id
 // @desc     Add events item
 // @access   Private
-router.put(
-    '/item',
+router.post(
+    '/item/:id',
     auth,
-    check('name', 'Item name is required').notEmpty(),
+    check('name_item', 'Item name is required').notEmpty(),
     check('type', 'Type is required').notEmpty(),
     check('quantity', 'Quantity is required').notEmpty(),
     async (req, res) => {
@@ -123,13 +123,25 @@ router.put(
         }
     
         try {
-            const event = await Event.findOne({ user: req.user.id });
+            const user = await User.findById(req.user.id).select('-password');
+            const event = await Event.findById(req.params.id);
+            const { name_item, fa, brand, type, quantity } = req.body;
 
-            event.items.unshift(req.body);
-    
+            const newItem = {
+                user: req.user.id,
+                name: user.name,
+                name_item: name_item,
+                fa: fa,
+                brand: brand,
+                type: type,
+                quantity: quantity,
+            };
+
+            event.items.unshift(newItem);
+
             await event.save();
-    
-            res.json(event);
+
+            res.json(event.items);
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server Error');
@@ -137,34 +149,46 @@ router.put(
     }
 );
 
-// @route    DELETE api/events/item/:item_id
-// @desc     Delete item from events
+// @route    DELETE api/events/item/:id/:item_id
+// @desc     Delete item
 // @access   Private
-
-router.delete('/item/:item_id', auth, async (req, res) => {
+router.delete('/item/:id/:item_id', auth, async (req, res) => {
     try {
-        const foundEvent = await Event.findOne({ user: req.user.id });
-
-        foundEvent.items = foundEvent.items.filter(
-            (item) => item._id.toString() !== req.params.item_id
-    );
-
-        await foundEvent.save();
-        return res.status(200).json(foundEvent);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ msg: 'Server error' });
+        const event = await Event.findById(req.params.id);
+    
+        // Pull out item
+        const item = event.items.find(
+            (item) => item.id === req.params.item_id
+        );
+        // Make sure item exists
+        if (!item) {
+            return res.status(404).json({ msg: 'Item does not exist' });
+        }
+        // Check user
+        if (item.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not authorized' });
+        }
+    
+        event.items = event.items.filter(
+            ({ id }) => id !== req.params.item_id
+        );
+    
+        await event.save();
+    
+        return res.json(event.items);
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Server Error');
     }
 });
 
 // @route    POST api/events/support/:id
-// @desc     support on a post
+// @desc     Add events support
 // @access   Private
 router.post(
     '/support/:id',
     auth,
-    checkObjectId('id'),
-    check('user', 'user is required').notEmpty(),
+    check('user', 'Onduty support is required').notEmpty(),
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -172,19 +196,24 @@ router.post(
         }
     
         try {
-            const user = await User.findById(req.body.user).select('-password');
             const event = await Event.findById(req.params.id);
-    
+
+            // Check if the onduty has already been supported
+            if (event.supports.some((support) => support.user.toString() === req.body.user)) {
+                return res.status(400).json({ msg: 'He already exists' });
+            }
+
+            const user = await User.findById(req.body.user).select('-password');
+
             const newSupport = {
-                name: user.name,
-                avatar: user.avatar,
-                user: req.body.user
+                user: req.body.user,
+                name: user.name
             };
-    
+
             event.supports.unshift(newSupport);
-    
+
             await event.save();
-    
+
             res.json(event.supports);
         } catch (err) {
             console.error(err.message);
@@ -197,20 +226,20 @@ router.post(
 // @desc     Delete support
 // @access   Private
 router.delete('/support/:id/:support_id', auth, async (req, res) => {
-        try {
+    try {
         const event = await Event.findById(req.params.id);
     
-        // Pull out support
+        // Pull out item
         const support = event.supports.find(
             (support) => support.id === req.params.support_id
         );
         // Make sure support exists
         if (!support) {
-            return res.status(404).json({ msg: 'Support does not exist' });
+            return res.status(404).json({ msg: 'Onduty support does not exist' });
         }
         // Check user
         if (support.user.toString() !== req.user.id) {
-            return res.status(401).json({ msg: 'Onduty support not authorized' });
+            return res.status(401).json({ msg: 'Onduty not authorized' });
         }
     
         event.supports = event.supports.filter(
@@ -220,10 +249,10 @@ router.delete('/support/:id/:support_id', auth, async (req, res) => {
         await event.save();
     
         return res.json(event.supports);
-        } catch (err) {
-            console.error(err.message);
-            return res.status(500).send('Server Error');
-        }
+    } catch (err) {
+        console.error(err.message);
+        return res.status(500).send('Server Error');
+    }
 });
 
 module.exports = router;
