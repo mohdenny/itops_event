@@ -166,12 +166,17 @@ router.delete('/item/:id/:item_id', auth, async (req, res) => {
         }
         // Check user
         if (item.user.toString() !== req.user.id) {
+            console.log(item.user);
+            console.log(req.user.id);
             return res.status(401).json({ msg: 'User not authorized' });
         }
     
         event.items = event.items.filter(
             ({ id }) => id !== req.params.item_id
         );
+
+        console.log(item.user);
+        console.log(req.user.id);
     
         await event.save();
     
@@ -239,6 +244,8 @@ router.delete('/support/:id/:support_id', auth, async (req, res) => {
         }
         // Check user
         if (support.user.toString() !== req.user.id) {
+            console.log(support.user);
+            console.log(req.user.id);
             return res.status(401).json({ msg: 'Onduty not authorized' });
         }
     
