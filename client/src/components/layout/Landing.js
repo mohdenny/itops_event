@@ -3,18 +3,17 @@ import React, { Fragment } from 'react';
 const Landing = () => {
     return (
         <Fragment>
-            <div className='p-10 bg-gradient-to-r from-blue-400 to-gray-300 w-full h-screen'>
-                <div className='grid grid-cols-2 gap-4 h-full'>
-                    <div className='p-2 bg-yellow-200 h-full grid grid-rows-6 grid-flow-col gap-4 rounded-xl'>
-                        <div className='text-center text-3xl font-mono h-10'><h1>Upcoming</h1></div>
-                        <div className='bg-white rounded-xl'>2</div>
-                        <div className='bg-white rounded-xl'>3</div>
-                        <div className='bg-white rounded-xl'>4</div>
-                        <div className='bg-white rounded-xl'>5</div>
-                        <div className='bg-white rounded-xl'>6</div>
-                    </div>
-                    <div className='bg-green-200 h-full rounded-xl'>
-                    
+            <div className='bg-main p-10 bg-gradient-to-r from-blue-400 to-gray-300 w-full h-screen'>
+                <div className='card h-full'>
+                    <div className='card-header bg-yellow-100 rounded-lg'>Upcoming</div>
+                    <div className='card-body h-full rounded-md'>
+                        <div className='card-content bg-white grid grid-rows-3 grid-flow-col'>
+                            <div className='p-3 bg-white rounded-lg shadow-lg'>
+                                <p className='font-bold text-xl overflow-ellipsis'>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                <p className='text-gray-600 text-lg'>Studio 2 Grand </p>
+                                <p className='text-gray-400 text-base'>08-10-2021</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
