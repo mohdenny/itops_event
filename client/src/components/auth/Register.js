@@ -1,34 +1,81 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        password2: ''
+    });
+
+    const { name, email, password, password2 } = formData;
+
+    const onChange = (e) =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        if (password !== password2) {
+            setAlert('Passwords do not match', 'danger');
+        } else {
+            register({ name, email, password });
+        }
+    };
+    
+    if (isAuthenticated) {
+        return <Redirect to="/dashboard" />;
+    }
+
     return (
         <Fragment>
             <div className="bg-white p-8 grid grid-cols-2 rounded-lg">
                 <div className="information p-8 border-r-2">
                     <div class="px-4 sm:px-0">
-                        <h3 class="text-lg font-medium leading-6 text-gray-900">Create account</h3>
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Create Your Account</h3>
                         <p class="mt-1 text-sm text-gray-600">
                             Make sure the information here is valid
                         </p>
                     </div>
                 </div>
                 <div className="form-register p-8">
-                    <form className="w-full max-w-lg">
+                    <form className="w-full max-w-lg" onSubmit={onSubmit}>
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className="w-full px-3">
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                                     Name
                                 </label>
-                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
+                                <input 
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                                    name="name"
+                                    id="grid-first-name" 
+                                    type="text" 
+                                    placeholder="Jane" 
+                                    value={name}
+                                    onChange={onChange}
+                                />
                                 <p className="text-red-500 text-xs italic">Please fill out this field.</p>
                             </div>
                         </div>
                         <div className="flex flex-wrap -mx-3 mb-6">
                             <div className="w-full px-3">
-                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email-address">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email">
                                     Email
                                 </label>
-                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="email-address" id="email-address" autocomplete="email" placeholder="jane@gmail.com" />
+                                <input 
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                                    type="email" 
+                                    name="email" 
+                                    id="email" 
+                                    autocomplete="email" 
+                                    placeholder="jane@gmail.com" 
+                                    value={email}
+                                    onChange={onChange}
+                                />
                                 <p className="text-gray-600 text-xs italic">Enter a valid email</p>
                             </div>
                         </div>
@@ -37,7 +84,15 @@ const Register = () => {
                                 <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                                     Password
                                 </label>
-                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************" />
+                                <input 
+                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
+                                    id="grid-password" 
+                                    type="password" 
+                                    placeholder="******************" 
+                                    name="password2"
+                                    value={password2}
+                                    onChange={onChange}
+                                />
                                 <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
                             </div>
                         </div>
@@ -51,6 +106,16 @@ const Register = () => {
             </div>
         </Fragment>
     )
-}
+};
 
-export default Register;
+Register.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+};
+  
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+  
+export default connect(mapStateToProps, { setAlert, register })(Register);
