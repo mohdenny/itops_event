@@ -44,7 +44,7 @@ const Navbar = () => {
                   </svg>
                 </button> */}
                 <Link to="/register" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Register</Link>
-                <a href="#" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                <Link to="/login" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Login</Link>
               </div>
             </div>
           </div>
