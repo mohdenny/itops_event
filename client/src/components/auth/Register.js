@@ -1,49 +1,55 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const Register = () => {
     return (
-        <div>
-            <div class="md:grid md:grid-cols-3 md:gap-6">
-                <div class="md:col-span-1">
-                <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-                    <p class="mt-1 text-sm text-gray-600">
-                    Use a permanent address where you can receive mail.
-                    </p>
+        <Fragment>
+            <div className="bg-white p-8 grid grid-cols-2 rounded-lg">
+                <div className="information p-8 border-r-2">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Create account</h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                            Make sure the information here is valid
+                        </p>
+                    </div>
                 </div>
-                </div>
-                <div class="mt-5 md:mt-0 md:col-span-2">
-                <form action="#" method="POST">
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                    <div class="px-4 py-5 bg-white sm:p-6">
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-                                <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                <div className="form-register p-8">
+                    <form className="w-full max-w-lg">
+                        <div className="flex flex-wrap -mx-3 mb-6">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                                    Name
+                                </label>
+                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" />
+                                <p className="text-red-500 text-xs italic">Please fill out this field.</p>
                             </div>
-
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-                                <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-                            </div>
-
-                            <div class="col-span-6 sm:col-span-4">
-                                <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
-                                <input type="text" name="email-address" id="email-address" autocomplete="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
-                            </div>
-
                         </div>
-                    </div>
-                    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Save
-                        </button>
-                    </div>
-                    </div>
-                </form>
+                        <div className="flex flex-wrap -mx-3 mb-6">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="email-address">
+                                    Email
+                                </label>
+                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" name="email-address" id="email-address" autocomplete="email" placeholder="jane@gmail.com" />
+                                <p className="text-gray-600 text-xs italic">Enter a valid email</p>
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap -mx-3 mb-6">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                                    Password
+                                </label>
+                                <input className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="******************" />
+                                <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
+                            </div>
+                        </div>
+                        <div class="px-4 py-3 text-right sm:px-6">
+                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Save
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </div>
+        </Fragment>
     )
 }
 
