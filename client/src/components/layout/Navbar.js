@@ -2,6 +2,10 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const authLinks = (
+    
+  )
+
   return (
     <Fragment>
       <nav className="bg-gray-100">

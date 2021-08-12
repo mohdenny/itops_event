@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 const Landing = () => {
     return (
         <Fragment>
-            <div className='grid grid-cols-2 gap-4 p-8 bg-gradient-to-r from-blue-400 to-gray-300 h-screen'>
+            <div className='grid grid-cols-2 gap-4 p-8 h-screen'>
                 <div className='card h-full'>
                     <div className='card-header bg-yellow-200 h-16 text-center py-3.5 text-2xl font-mono rounded-t-xl'>Upcoming</div>
                     <div className='card-body bg-yellow-100 rounded-b-xl'>
