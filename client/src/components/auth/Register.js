@@ -36,13 +36,16 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         <Fragment>
             <div className="w-full max-w-xs m-auto">
                 <form className="bg-white shadow-lg rounded border px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
+                    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate mb-4">
+                        Sign up
+                    </h2>
                     <Alert />
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                             Name
                         </label>
                         <input 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                             name="name"
                             id="name" 
                             type="text" 
@@ -52,7 +55,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                         />
                         <p className="text-gray-600 text-xs italic">Please fill out this field.</p> 
                     </div>
-                    <div className="mb-6">
+                    <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                             Email
                         </label>
@@ -68,7 +71,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                         />
                         <p className="text-red-600 text-xs italic">Enter a valid email</p>
                     </div>
-                    <div className="mb-6">
+                    <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                             Password
                         </label>
@@ -83,7 +86,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                         />
                         <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
                     </div>
-                    <div className="mb-6">
+                    <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                             Confirm Password
                         </label>
