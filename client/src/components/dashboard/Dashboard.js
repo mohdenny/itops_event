@@ -1,26 +1,34 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentProfile } from '../../actions/profile';
+import { getEvents } from '../../actions/event';
 
-const Dashboard = () => {
+const Dashboard = ({
+    getEvents,
+    auth: { user },
+    event: { event }
+}) => {
+    
+    useEffect(() => {
+        getEvents();
+    }, [getEvents])
+
     return (
         <Fragment>
             <header>
-                <div class="max-w-7xl mx-auto">
-                    <h1 class="text-3xl font-bold text-gray-900">
+                <div className="max-w-7xl mx-auto">
+                    <h1 className="text-3xl font-bold text-gray-900">
                         Dashboard
-                    </h1><br />
-                    <hr/>
+                    </h1>
                 </div>
             </header>
             
             <main>
-                <div class="max-w-7xl mx-auto py-6">
+                <div className="max-w-7xl mx-auto py-6">
                 
-                    <div class="px-4 py-6 sm:px-0">
-                        <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+                    <div className="px-4 py-6 sm:px-0">
+                        Welcome { user && user.name }
                     </div>
 
                 </div>
@@ -29,4 +37,15 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+Dashboard.propTypes = {
+    getEvents: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    event: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+    auth: state.auth,
+    event: state.event
+})
+
+export default connect(mapStateToProps, { getEvents })(Dashboard);

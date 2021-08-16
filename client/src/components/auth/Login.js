@@ -29,7 +29,7 @@ const Login = ({ login, isAuthenticated }) => {
         <Fragment>
             <div className="w-full max-w-xs m-auto">
                 <form className="bg-white shadow-lg rounded border px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
-                    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate mb-4">
+                    <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate mb-4">
                         Sign in
                     </h2>
                     <Alert />

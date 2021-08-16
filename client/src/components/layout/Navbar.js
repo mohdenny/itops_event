@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
@@ -7,9 +7,9 @@ import { logout } from '../../actions/auth';
 const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const authLeftLinks = (
     <Fragment>
-      <Link to="/dashboard" className="bg-gray-400 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</Link>
-      <Link to="/newevent" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">New Event</Link>
-      <Link to="/allevent" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">All Event</Link>
+      <NavLink exact activeClassName="bg-gray-400 text-white" to="/dashboard" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</NavLink>
+      <NavLink exact activeClassName="bg-gray-400 text-white" to="/createevent" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Create Event</NavLink>
+      <NavLink exact activeClassName="bg-gray-400 text-white" to="/manageevent" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Manage Event</NavLink>
     </Fragment>
   );
 
@@ -23,13 +23,23 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   );
 
   const guestLeftLinks = (
-    <Link to="/allevent" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">All Event</Link>
+    <NavLink exact activeClassName="bg-gray-400 text-white" to="/" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Monitor Widget</NavLink>
   );
 
   const guestRigthLinks = (
     <Fragment>
-      <Link to="/register" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Register</Link>
-      <Link to="/login" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Login</Link>
+      <NavLink exact activeClassName="active" 
+        to="/register" 
+        className="active text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+      >
+        Register
+      </NavLink>
+
+      <NavLink exact activeClassName="active" 
+        to="/login" 
+        className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+      >
+      Login</NavLink>
     </Fragment>
   );
 
@@ -74,7 +84,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 
         <div className="sm:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <a href="#" className="bg-gray-400 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
+            <a href="#" className="bg-gray-400 text-white text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
 
             <a href="#" className="text-gray-500 hover:bg-gray-200 hover:text-black block px-3 py-2 rounded-md text-base font-medium">Team</a>
 
