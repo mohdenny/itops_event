@@ -1,15 +1,36 @@
 import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+  const location = useLocation();
+
   const authLeftLinks = (
     <Fragment>
-      <NavLink exact activeClassName="bg-gray-400 text-white" to="/dashboard" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Dashboard</NavLink>
-      <NavLink exact activeClassName="bg-gray-400 text-white" to="/createevent" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Create Event</NavLink>
-      <NavLink exact activeClassName="bg-gray-400 text-white" to="/manageevent" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Manage Event</NavLink>
+      <Link 
+        to="/dashboard" 
+        className={` ${ location.pathname === '/dashboard' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`} 
+        aria-current="page"
+      >
+        Dashboard
+      </Link>
+
+      <Link 
+        to="/createevent" 
+        className={` ${ location.pathname === '/createevent' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
+      >
+        Create Event
+      </Link>
+
+      <Link 
+        to="/manageevent" 
+        className={` ${ location.pathname === '/manageevent' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
+      >
+        Manage Event
+      </Link>
+
     </Fragment>
   );
 
@@ -23,23 +44,28 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   );
 
   const guestLeftLinks = (
-    <NavLink exact activeClassName="bg-gray-400 text-white" to="/" className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium">Monitor Widget</NavLink>
+    <Link 
+      to="/" 
+      className={` ${ location.pathname === '/' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
+    >
+      Widget
+    </Link>
   );
 
   const guestRigthLinks = (
     <Fragment>
-      <NavLink exact activeClassName="active" 
+      <Link 
         to="/register" 
-        className="active text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+        className={` ${ location.pathname === '/register' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
       >
         Register
-      </NavLink>
+      </Link>
 
-      <NavLink exact activeClassName="active" 
+      <Link 
         to="/login" 
-        className="text-gray-500 hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium"
+        className={` ${ location.pathname === '/login' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
       >
-      Login</NavLink>
+      Login</Link>
     </Fragment>
   );
 

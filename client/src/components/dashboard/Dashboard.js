@@ -27,7 +27,7 @@ const Dashboard = ({
             <main>
                 <div className="max-w-7xl mx-auto py-6">
                 
-                    <div className="px-4 py-6 sm:px-0">
+                    <div className="">
                         Welcome { user && user.name }
                     </div>
 
