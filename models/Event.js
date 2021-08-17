@@ -64,11 +64,11 @@ const EventSchema = new Schema ({
             }
         }
     ],
-    from: {
+    start: {
         type: Date,
         required: true
     },
-    to: {
+    end: {
         type: Date
     },
     location: {

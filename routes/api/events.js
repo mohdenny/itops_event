@@ -16,7 +16,7 @@ router.post(
     auth,
     check('title', 'Title is required').notEmpty(),
     check('location', 'Location is required').notEmpty(),
-    check('from', 'From date is required and needs to be from the past')
+    check('start', 'Start date is required and needs to be from the past')
         .notEmpty()
         .custom((value, { req }) => (req.body.to ? value < req.body.to : true)),
     async (req, res) => {
@@ -27,7 +27,7 @@ router.post(
 
     try {
         const user = await User.findById(req.user.id).select('-password');
-        const { title, description, location, from }= req.body;
+        const { title, description, location, start, end }= req.body;
 
         const newEvent = new Event({
             user: req.user.id,
@@ -36,7 +36,8 @@ router.post(
             avatar: user.avatar,
             description: description,
             location: location,
-            from: from
+            start: start,
+            end: end
         });
 
         const post = await newEvent.save();

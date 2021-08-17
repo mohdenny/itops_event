@@ -53,14 +53,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             value={name}
                             onChange={onChange}
                         />
-                        <p className="text-gray-600 text-xs italic">Please fill out this field.</p> 
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                             Email
                         </label>
                         <input 
-                            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
                             type="email" 
                             name="email" 
                             id="email" 
@@ -69,7 +68,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             value={email}
                             onChange={onChange}
                         />
-                        <p className="text-red-600 text-xs italic">Enter a valid email</p>
+                        <p className="text-xs italic">Enter a valid email</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -84,7 +83,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             value={password}
                             onChange={onChange}
                         />
-                        <p className="text-gray-600 text-xs italic">Make it as long and as crazy as you'd like</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -99,7 +97,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             value={password2}
                             onChange={onChange}
                         />
-                        <p className="text-gray-600 text-xs italic">Please confirm your password</p>
                     </div>
                     <div className="flex items-center justify-between">
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
