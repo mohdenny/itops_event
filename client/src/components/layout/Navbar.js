@@ -18,7 +18,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
       </Link>
 
       <Link 
-        to="/createevent" 
+        to="/create-event" 
         className={` ${ location.pathname === '/createevent' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
       >
         Create Event
