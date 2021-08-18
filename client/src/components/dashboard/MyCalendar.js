@@ -5,16 +5,13 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const MyCalendar = ({ events }) => {
     const localizer = momentLocalizer(moment);
-    const { start, end } = events;
-
-    console.log(start)
 
     return (
         <div className='border p-8 rounded-xl mb-4' style={{ height: '500pt'}}>
           <Calendar
             events={events}
-            startAccessor={moment(start).toDate()}
-            endAccessor={moment(end).toDate()}
+            startAccessor={(events) => { return moment(events.start).toDate() }}
+            endAccessor={(events) => { return moment(events.end).toDate() }}
             defaultDate={moment().toDate()}
             localizer={localizer}
           />
