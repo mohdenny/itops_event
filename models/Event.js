@@ -76,8 +76,7 @@ const EventSchema = new Schema ({
         required: true
     },
     status: {
-        type: String,
-        required: true
+        type: String
     },
     date: {
         type: Date,

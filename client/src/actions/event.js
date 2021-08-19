@@ -24,12 +24,15 @@ export const getEvents = () => async dispatch => {
 // Get event by ID
 export const getEventById = (eventId) => async (dispatch) => {
     try {
-        const res = await api.get(`/events/${eventId}`);
+        if (eventId) {
+            const res = await api.get(`/events/${eventId}`);
 
-        dispatch({
-            type: GET_EVENT,
-            payload: res.data
-        });
+            dispatch({
+                type: GET_EVENT,
+                payload: res.data
+            });
+        }
+
     } catch (err) {
         dispatch({
             type: EVENT_ERROR,

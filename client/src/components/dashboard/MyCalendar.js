@@ -7,14 +7,18 @@ const MyCalendar = ({ events }) => {
     const localizer = momentLocalizer(moment);
 
     return (
-        <div className='border p-8 rounded-xl mb-4' style={{ height: '500pt'}}>
-          <Calendar
-            events={events}
-            startAccessor={(events) => { return moment(events.start).toDate() }}
-            endAccessor={(events) => { return moment(events.end).toDate() }}
-            defaultDate={moment().toDate()}
-            localizer={localizer}
-          />
+        <div className='max-w-full bg-gray-200 rounded-xl mb-10' style={{ height: '400pt'}}>
+          <div className="px-6 py-4 text-center">
+            <div className="font-bold text-lg mb-2">Calendar</div>
+          </div>
+              <Calendar
+                events={events}
+                startAccessor={(events) => { return moment(events.start).toDate() }}
+                endAccessor={(events) => { return moment(events.end).toDate() }}
+                defaultDate={moment().toDate()}
+                localizer={localizer}
+                className="bg-gray-100 p-8 rounded-xl"
+              />
         </div>
     );
 }

@@ -19,14 +19,14 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 
       <Link 
         to="/create-event" 
-        className={` ${ location.pathname === '/createevent' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
+        className={` ${ location.pathname === '/create-event' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
       >
         Create Event
       </Link>
 
       <Link 
         to="/manageevent" 
-        className={` ${ location.pathname === '/manageevent' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
+        className={` ${ location.pathname === '/manage-event' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
       >
         Manage Event
       </Link>

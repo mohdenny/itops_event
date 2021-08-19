@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getEvents } from '../../actions/event';
 import CardList from './CardList';
 import MyCalendar from './MyCalendar';
+import Alert from '../layout/Alert';
 
 const Dashboard = ({
     getEvents,
@@ -28,10 +29,12 @@ const Dashboard = ({
             
             <main>
                 <div className="max-w-7xl mx-auto py-6">
-                
+
                     <div className="greeting mb-4">
                         Welcome { user && user.name }
                     </div>
+
+                    <Alert />
 
                     <CardList events={events} />
 
