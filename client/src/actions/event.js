@@ -1,6 +1,6 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { GET_EVENT, GET_EVENTS, EVENT_ERROR, CLEAR_EVENT } from './types';
+import { GET_EVENT, GET_EVENTS, EVENT_ERROR, CLEAR_EVENT, UPDATE_EVENT } from './types';
 
 // Get all events
 export const getEvents = () => async dispatch => {
@@ -31,6 +31,7 @@ export const getEventById = (eventId) => async (dispatch) => {
                 type: GET_EVENT,
                 payload: res.data
             });
+
         }
 
     } catch (err) {
@@ -41,8 +42,8 @@ export const getEventById = (eventId) => async (dispatch) => {
     }
 }
 
-// Create or update event
-export const createEvent = ( formData, history, edit = false ) => async (dispatch) => {
+// Create event
+export const createEvent = ( formData, history ) => async (dispatch) => {
     try {
         const res = await api.post('/events', formData);
 
@@ -51,11 +52,37 @@ export const createEvent = ( formData, history, edit = false ) => async (dispatc
             payload: res.data
         });
 
-        dispatch(setAlert(edit ? 'Event Updated' : 'Event Created', 'blue'));
+        dispatch(setAlert('Event Created', 'blue'));
 
-        if (!edit) {
-            history.push('/dashboard');
+        history.push('/dashboard');
+
+        console.log('hola from create')
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach((error) => dispatch(setAlert(error.msg, 'red')));
         }
+
+        dispatch({
+            type: EVENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// update event
+export const updateEvent = (id, formData) => async (dispatch) => {
+    try {
+        const res = await api.put(`/events/event/${id}`, formData);
+
+        dispatch({
+            type: UPDATE_EVENT,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Event Updated', 'blue'));
+
     } catch (err) {
         const errors = err.response.data.errors;
 

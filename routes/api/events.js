@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
-
 const Event = require('../../models/Event');
 const User = require('../../models/User');
 const checkObjectId = require('../../middleware/checkObjectId');
@@ -82,6 +81,53 @@ router.get('/:id', auth, checkObjectId('id'), async (req, res) => {
     }
 });
 
+// @route    post api/events/event/:id
+// @desc     update events 
+// @access   Private
+router.put(
+    '/event/:id',
+    auth,
+    checkObjectId('id'),
+    check('title', 'Title is required').notEmpty(),
+    check('location', 'Location is required').notEmpty(),
+    check('start', 'Start date is required and needs to be from the past').notEmpty(),
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        const user = await User.findById(req.user.id).select('-password');
+        const { title, description, location, start, end, status }= req.body;
+
+        const updateEvent = {
+            user: req.user.id,
+            title: title,
+            name: user.name,
+            avatar: user.avatar,
+            description: description,
+            location: location,
+            start: start,
+            end: end,
+            status: status
+        };
+
+        try {
+
+            let event = await Event.findByIdAndUpdate(
+                req.params.id ,
+                { $set: updateEvent },
+                { new: true, upsert: true, setDefaultsOnInsert: true }
+            );
+
+            return res.json(event);
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    }
+);
+
 // @route    DELETE api/event/:id
 // @desc     Delete a event
 // @access   Private
@@ -114,6 +160,7 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
 router.post(
     '/item/:id',
     auth,
+    checkObjectId('id'),
     check('name_item', 'Item name is required').notEmpty(),
     check('type', 'Type is required').notEmpty(),
     check('quantity', 'Quantity is required').notEmpty(),
@@ -194,6 +241,7 @@ router.delete('/item/:id/:item_id', auth, async (req, res) => {
 router.post(
     '/support/:id',
     auth,
+    checkObjectId('id'),
     check('user', 'Onduty support is required').notEmpty(),
     async (req, res) => {
         const errors = validationResult(req);

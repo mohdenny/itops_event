@@ -16,6 +16,7 @@ const Routes = props => {
                 <PrivateRoute exact path='/dashboard' component={Dashboard} />
                 <PrivateRoute exact path='/create-event' component={EventForm} />
                 <PrivateRoute exact path='/events' component={Events} />
+                <PrivateRoute exact path='/events/event/:id' component={EventForm} />
             </Switch>
         </section>
     );

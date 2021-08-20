@@ -45,7 +45,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             Name
                         </label>
                         <input 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                            className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                             name="name"
                             id="name" 
                             type="text" 
@@ -59,7 +59,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             Email
                         </label>
                         <input 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+                            className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
                             type="email" 
                             name="email" 
                             id="email" 
@@ -75,7 +75,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             Password
                         </label>
                         <input 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+                            className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
                             id="password" 
                             type="password" 
                             placeholder="******************" 
@@ -89,7 +89,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                             Confirm Password
                         </label>
                         <input 
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
+                            className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" 
                             id="password2" 
                             type="password2" 
                             placeholder="******************" 

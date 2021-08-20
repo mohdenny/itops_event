@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createEvent, getEventById } from '../../actions/event';
+import { createEvent, getEventById, updateEvent } from '../../actions/event';
 import Alert from '../layout/Alert';
 import Header from '../layout/Header';
 import moment from 'moment';
@@ -13,14 +13,16 @@ const initialState = {
     start: '',
     end: '',
     location: '',
-    status: 'upcoming'
+    status: ''
 }
 
 const EventForm = ({ 
     event: { event, loading },
     createEvent,
     getEventById,
-    history 
+    updateEvent,
+    history,
+    match 
 }) => {
 
     const [formData, setFormData] = useState(initialState);
@@ -29,7 +31,7 @@ const EventForm = ({
 
     useEffect(() => {
         if (!event) {
-            getEventById();
+            getEventById(match.params.id);
         }
 
         if (!loading && event) {
@@ -39,7 +41,7 @@ const EventForm = ({
             }
             setFormData(eventData);
         }
-    }, [loading, getEventById, event]);
+    }, [loading, getEventById, match.params.id, event]);
 
     const {
         title,
@@ -55,7 +57,12 @@ const EventForm = ({
 
     const onSubmit = (e) => {
         e.preventDefault();
-        createEvent(formData, history, event ? true : false);
+        if (!event) {
+            createEvent(formData, history);
+            setFormData('');
+        }
+
+        updateEvent(match.params.id, formData);
     };
 
     return (
@@ -170,6 +177,7 @@ const EventForm = ({
 EventForm.propTypes = {
     createEvent: PropTypes.func.isRequired,
     getEventById: PropTypes.func.isRequired,
+    updateEvent: PropTypes.func.isRequired,
     event: PropTypes.object.isRequired
 };
 
@@ -177,6 +185,6 @@ const mapStateToProps = (state) => ({
     event: state.event
 });
 
-export default connect(mapStateToProps, { createEvent, getEventById })(
+export default connect(mapStateToProps, { createEvent, getEventById, updateEvent })(
     EventForm
 );
