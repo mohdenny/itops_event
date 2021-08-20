@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getEvents } from '../../actions/event';
-import CardList from './CardList';
-import MyCalendar from './MyCalendar';
+import Header from '../layout/Header';
+import CardEvent from '../card-event/CardEvent';
+import Calendar from '../calendar/Calendar';
 import Alert from '../layout/Alert';
 
 const Dashboard = ({
@@ -19,13 +20,7 @@ const Dashboard = ({
 
     return (
         <Fragment>
-            <header>
-                <div className="max-w-7xl mx-auto">
-                    <h1 className="text-3xl font-bold text-gray-900">
-                        Dashboard
-                    </h1>
-                </div>
-            </header>
+            <Header text={'Dasboard'} />
             
             <main>
                 <div className="max-w-7xl mx-auto py-6">
@@ -36,9 +31,9 @@ const Dashboard = ({
 
                     <Alert />
 
-                    <CardList events={events} />
+                    <CardEvent events={events} />
 
-                    <MyCalendar events={events} />
+                    <Calendar events={events} />
 
                 </div>
             </main>

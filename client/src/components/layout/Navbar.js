@@ -25,8 +25,8 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
       </Link>
 
       <Link 
-        to="/manageevent" 
-        className={` ${ location.pathname === '/manage-event' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
+        to="/events" 
+        className={` ${ location.pathname === '/events' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
       >
         Manage Event
       </Link>
@@ -110,7 +110,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 
         <div className="sm:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <a href="#" className="bg-gray-400 text-white text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
+            <a href="#" className="bg-gray-400 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
 
             <a href="#" className="text-gray-500 hover:bg-gray-200 hover:text-black block px-3 py-2 rounded-md text-base font-medium">Team</a>
 

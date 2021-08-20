@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createEvent, getEventById } from '../../actions/event';
 import Alert from '../layout/Alert';
+import Header from '../layout/Header';
+import moment from 'moment';
 
 const initialState = {
     title: '',
@@ -20,9 +22,10 @@ const EventForm = ({
     getEventById,
     history 
 }) => {
-    const [formData, setFormData] = useState(initialState);
 
+    const [formData, setFormData] = useState(initialState);
     const creatingEvent = useRouteMatch('/create-event');
+    const disableThePreviousDay = moment().format().slice(0, 16);
 
     useEffect(() => {
         if (!event) {
@@ -57,13 +60,7 @@ const EventForm = ({
 
     return (
         <Fragment> 
-            <header>
-                <div className="max-w-7xl mx-auto">
-                    <h1 className="text-3xl font-bold text-gray-900">
-                        { creatingEvent ? 'Create Event' : 'Edit Event' }
-                    </h1>
-                </div>
-            </header>
+            <Header text={ creatingEvent ? 'Create Event' : 'Edit Event' } />
 
             <main>
                 <div className="w-full max-w-full m-auto mt-4">
@@ -96,7 +93,7 @@ const EventForm = ({
                                 id="description" 
                                 type="textarea" 
                                 rows="3" 
-                                placeholder="Vaksin Untuk Indonesia adalah kampanye yang diusung Media Group (Metro TV, Medcom.id dan Media." 
+                                placeholder="Vaksin Untuk Indonesia adalah kampanye yang diusung Media Group (Metro TV, Medcom.id dan Media)" 
                                 value={description}
                                 onChange={onChange}
                             />
@@ -112,6 +109,7 @@ const EventForm = ({
                                 type="datetime-local" 
                                 value={start}
                                 onChange={onChange}
+                                min={disableThePreviousDay}
                             />
                         </div>
                         <div className="mb-4">
@@ -125,6 +123,7 @@ const EventForm = ({
                                 type="datetime-local" 
                                 value={end}
                                 onChange={onChange}
+                                min={disableThePreviousDay}
                             />
                         </div>
                         <div className="mb-4">

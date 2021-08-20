@@ -4,7 +4,8 @@ import Register from '../auth/Register';
 import Login from '../auth/Login';
 import Dashboard from '../dashboard/Dashboard';
 import PrivateRoute from './PrivateRoute';
-import EventForm from '../event-forms/EventForm';
+import EventForm from '../events/EventForm';
+import Events from '../events/Events';
 
 const Routes = props => {
     return (
@@ -14,6 +15,7 @@ const Routes = props => {
                 <Route exact path='/login' component={Login} />
                 <PrivateRoute exact path='/dashboard' component={Dashboard} />
                 <PrivateRoute exact path='/create-event' component={EventForm} />
+                <PrivateRoute exact path='/events' component={Events} />
             </Switch>
         </section>
     );
