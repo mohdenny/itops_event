@@ -13,7 +13,7 @@ const initialState = {
     start: '',
     end: '',
     location: '',
-    status: ''
+    status: 'new'
 }
 
 const EventForm = ({ 

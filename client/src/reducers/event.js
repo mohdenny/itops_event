@@ -1,4 +1,11 @@
-import { GET_EVENT, GET_EVENTS, EVENT_ERROR, CLEAR_EVENT, UPDATE_EVENT } from '../actions/types';
+import { 
+    GET_EVENT, 
+    GET_EVENTS, 
+    EVENT_ERROR, 
+    CLEAR_EVENT, 
+    UPDATE_EVENT, 
+    DELETE_EVENT 
+} from '../actions/types';
 
 const initialState = {
     events: [],
@@ -22,6 +29,12 @@ function eventReducer(state = initialState, action) {
             return {
                 ...state,
                 events: payload,
+                loading: false
+            };
+        case DELETE_EVENT:
+            return {
+                ...state,
+                events: state.events.filter((event) => event._id !== payload),
                 loading: false
             };
         case EVENT_ERROR:

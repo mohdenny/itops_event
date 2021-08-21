@@ -16,7 +16,7 @@ const Dashboard = ({
     
     useEffect(() => {
         getEvents();
-    }, [getEvents])
+    }, [getEvents, events])
 
     return (
         <Fragment>

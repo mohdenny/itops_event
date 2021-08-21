@@ -128,10 +128,10 @@ router.put(
     }
 );
 
-// @route    DELETE api/event/:id
+// @route    DELETE api/events/event/:id
 // @desc     Delete a event
 // @access   Private
-router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
+router.delete('/event/:id', [auth, checkObjectId('id')], async (req, res) => {
     try {
         const event = await Event.findById(req.params.id);
     

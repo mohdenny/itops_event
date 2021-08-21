@@ -1,6 +1,6 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { GET_EVENT, GET_EVENTS, EVENT_ERROR, CLEAR_EVENT, UPDATE_EVENT } from './types';
+import { GET_EVENT, GET_EVENTS, EVENT_ERROR, CLEAR_EVENT, UPDATE_EVENT, DELETE_EVENT } from './types';
 
 // Get all events
 export const getEvents = () => async dispatch => {
@@ -90,6 +90,25 @@ export const updateEvent = (id, formData) => async (dispatch) => {
             errors.forEach((error) => dispatch(setAlert(error.msg, 'red')));
         }
 
+        dispatch({
+            type: EVENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// Delete Event
+export const deleteEvent = id => async dispatch => {
+    try {
+        await api.delete(`/events/event/${id}`);
+
+        dispatch({
+            type: DELETE_EVENT,
+            payload: id
+        });
+
+        dispatch(setAlert('Event Removed', 'blue'));
+    } catch (err) {
         dispatch({
             type: EVENT_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
