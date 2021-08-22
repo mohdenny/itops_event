@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import Header from '../layout/Header';
 import EventItem from './EventItem';
+import Alert from '../layout/Alert';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getEvents } from '../../actions/event';
@@ -20,6 +21,7 @@ const Events = ({ getEvents, event: { events } }) => {
                         <div className="text-center font-bold text-lg leading-7 text-gray-900 sm:text-2xl sm:truncate mb-4">
                             List of Events
                         </div>
+                        <Alert />
                         <div className="mb-4">
                             { events.length > 0 ? 
                                 (<EventItem events={events} />) :

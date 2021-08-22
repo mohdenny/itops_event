@@ -1,6 +1,14 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { GET_EVENT, GET_EVENTS, EVENT_ERROR, CLEAR_EVENT, UPDATE_EVENT, DELETE_EVENT } from './types';
+import { 
+    GET_EVENT, 
+    GET_EVENTS, 
+    EVENT_ERROR, 
+    CLEAR_EVENT, 
+    UPDATE_EVENT, 
+    DELETE_EVENT,
+    REMOVE_ITEM
+} from './types';
 
 // Get all events
 export const getEvents = () => async dispatch => {
@@ -83,6 +91,8 @@ export const updateEvent = (id, formData) => async (dispatch) => {
 
         dispatch(setAlert('Event Updated', 'blue'));
 
+        console.log(formData);
+
     } catch (err) {
         const errors = err.response.data.errors;
 
@@ -108,6 +118,50 @@ export const deleteEvent = id => async dispatch => {
         });
 
         dispatch(setAlert('Event Removed', 'blue'));
+    } catch (err) {
+        dispatch({
+            type: EVENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+//  Add Item
+export const addItem = (id, formData) => async dispatch => {
+    try {
+        const res = await api.post(`/events/item/${id}`, formData);
+
+        dispatch({
+            type: UPDATE_EVENT,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Item Added', 'blue'));
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach((error) => dispatch(setAlert(error.msg, 'red')));
+        }
+
+        dispatch({
+            type: EVENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
+
+// Delete item
+export const deleteItem = (eventId, itemId) => async dispatch => {
+    try {
+        await api.delete(`/events/item/${eventId}/${itemId}`);
+  
+        dispatch({
+            type: REMOVE_ITEM,
+            payload: itemId
+        });
+  
+        dispatch(setAlert('Item Removed', 'blue'));
     } catch (err) {
         dispatch({
             type: EVENT_ERROR,

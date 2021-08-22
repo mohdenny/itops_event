@@ -1,63 +1,37 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteEvent } from '../../actions/event';
+import { deleteItem } from '../../actions/event';
 
-const EventItem = ({ events, deleteEvent }) => {
-    const setColorStatus = (status) => {
-        switch (status) {
-            case '':
-                return 'bg-yellow-200 text-yellow-800';
-            case 'upcoming':
-                return 'bg-green-200 text-green-800';
-            case 'ongoing':
-                return 'bg-blue-200 text-blue-800';
-            default:
-                return '';
-        }
-    }
-
-    const renderedList = events.map(event => {
+const ItemList = ({ event: { event } , items }) => {
+    const renderedList = items.map(item => {
         return (
-            <tr key={event._id}>
+            <tr key={item._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                         <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
-                                <Link to={`/events/${event._id}`} className="hover:text-gray-500">
-                                    {event.title}
-                                </Link>
-                                
-                                { event.status === '' ?
-                                    <p className="*font-extralight italic text-xs text-red-900">
-                                        <strong>Items</strong> and <strong>Support</strong> are required!
-                                    </p> :
-                                    ''
-                                }
-                                
+                                {item.name_item}
                             </div>
                         </div>
                     </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{event.description}</div>
+                    <div className="text-sm text-gray-900">{item.fa}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{ `${moment(event.start).format("lll")} - ${moment(event.end).format("lll")}` } </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {event.location}
+                    <div className="text-sm text-gray-900">{item.brand}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`${setColorStatus(event.status)} px-2 inline-flex text-xs leading-5 font-semibold rounded-full`}>
-                        {event.status}
-                    </span>
+                    <div className="text-sm text-gray-900">{item.type}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{item.quantity}</div>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Link to={`/events/event/${event._id}`} className="ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200">Edit</Link>
-                    <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white hover:bg-red-800 hover:text-gray-200">Delete</button>
+                    <Link to={`/items/item/${item._id}`} className="ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200">Edit</Link>
+                    <button onClick={() => deleteItem(event._id, item._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white hover:bg-red-800 hover:text-gray-200">Delete</button>
                 </td>
             </tr>
         )
@@ -73,19 +47,19 @@ const EventItem = ({ events, deleteEvent }) => {
                                 <thead className="bg-gray-50">
                                     <tr>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Title
+                                        Item Name
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Description
+                                        FA / SN
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Schedule
+                                        Brand
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Location
+                                        Type
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Status
+                                        Quantity
                                     </th>
                                     <th scope="col" className="relative px-6 py-3">
                                         <span className="sr-only">Edit</span>
@@ -104,8 +78,11 @@ const EventItem = ({ events, deleteEvent }) => {
     )
 }
 
-EventItem.propTypes = {
-    deleteEvent: PropTypes.func.isRequired
+ItemList.propTypes = {
+    deleteItem: PropTypes.func.isRequired
 }
+const mapStateToProps = state => ({
+    event: state.event
+})
 
-export default connect(null, { deleteEvent } )(EventItem);
+export default connect(mapStateToProps, { deleteItem })(ItemList);

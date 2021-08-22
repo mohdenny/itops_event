@@ -13,9 +13,9 @@ const CardEvent = ({ events }) => {
                     <div className="px-6 py-4 text-center">
                         <div className="font-bold text-lg mb-2">New</div>
                     </div>
-                    { filteredEvent('new').length > 0 ? (
+                    { filteredEvent('').length > 0 ? (
                         <div className="bg-yellow-100 px-4 py-4 overflow-auto max-h-64">
-                            <CardItem events={events} sortText='new' />
+                            <CardItem events={events} sortText='' />
                         </div>
                     ) : (
                         <div className="bg-yellow-100 px-4 py-4 h-full">

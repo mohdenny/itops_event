@@ -13,7 +13,7 @@ const initialState = {
     start: '',
     end: '',
     location: '',
-    status: 'new'
+    status: ''
 }
 
 const EventForm = ({ 
@@ -81,7 +81,7 @@ const EventForm = ({
                                 Title
                             </label>
                             <input 
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                                 name="title"
                                 id="title" 
                                 type="text" 
@@ -95,7 +95,7 @@ const EventForm = ({
                                 Description
                             </label>
                             <input 
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                                 name="description"
                                 id="description" 
                                 type="textarea" 
@@ -110,7 +110,7 @@ const EventForm = ({
                                 Start
                             </label>
                             <input 
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                                 name="start"
                                 id="start" 
                                 type="datetime-local" 
@@ -124,7 +124,7 @@ const EventForm = ({
                                 End
                             </label>
                             <input 
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                                 name="end"
                                 id="end" 
                                 type="datetime-local" 
@@ -138,7 +138,7 @@ const EventForm = ({
                                 Location
                             </label>
                             <input 
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                                 name="location"
                                 id="location" 
                                 type="text" 
@@ -152,7 +152,7 @@ const EventForm = ({
                                 Status
                             </label>
                             <input 
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                                 name="status"
                                 id="status" 
                                 type="text" 
