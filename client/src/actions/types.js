@@ -13,6 +13,5 @@ export const UPDATE_EVENT = 'UPDATE_EVENT';
 export const CLEAR_EVENT = 'CLEAR_EVENT';
 export const EVENT_ERROR = 'EVENT_ERROR';
 export const DELETE_EVENT = 'DELETE_EVENT';
-export const REMOVE_ITEM = 'REMOVE_ITEM';
 // export const ADD_POST = 'ADD_POST';
 // export const ADD_COMMENT = 'ADD_COMMENT';

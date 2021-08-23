@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteItem } from '../../actions/event';
 
-const ItemList = ({ event: { event } , items }) => {
+const ItemList = ({ event: { event } , items , deleteItem }) => {
     const renderedList = items.map(item => {
         return (
             <tr key={item._id}>

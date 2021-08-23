@@ -6,8 +6,7 @@ import {
     EVENT_ERROR, 
     CLEAR_EVENT, 
     UPDATE_EVENT, 
-    DELETE_EVENT,
-    REMOVE_ITEM
+    DELETE_EVENT
 } from './types';
 
 // Get all events
@@ -64,7 +63,6 @@ export const createEvent = ( formData, history ) => async (dispatch) => {
 
         history.push('/dashboard');
 
-        console.log('hola from create')
     } catch (err) {
         const errors = err.response.data.errors;
 
@@ -90,8 +88,6 @@ export const updateEvent = (id, formData) => async (dispatch) => {
         });
 
         dispatch(setAlert('Event Updated', 'blue'));
-
-        console.log(formData);
 
     } catch (err) {
         const errors = err.response.data.errors;
@@ -127,7 +123,7 @@ export const deleteEvent = id => async dispatch => {
 };
 
 //  Add Item
-export const addItem = (id, formData) => async dispatch => {
+export const addItem = (id, formData, history) => async dispatch => {
     try {
         const res = await api.post(`/events/item/${id}`, formData);
 
@@ -137,6 +133,7 @@ export const addItem = (id, formData) => async dispatch => {
         });
 
         dispatch(setAlert('Item Added', 'blue'));
+
     } catch (err) {
         const errors = err.response.data.errors;
 
@@ -148,17 +145,19 @@ export const addItem = (id, formData) => async dispatch => {
             type: EVENT_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
+
+        console.log(err.response)
     }
 };
 
 // Delete item
-export const deleteItem = (eventId, itemId) => async dispatch => {
+export const deleteItem = (eventId, itemId, history) => async dispatch => {
     try {
-        await api.delete(`/events/item/${eventId}/${itemId}`);
+        const res = await api.delete(`/events/item/${eventId}/${itemId}`);
   
         dispatch({
-            type: REMOVE_ITEM,
-            payload: itemId
+            type: UPDATE_EVENT,
+            payload: res.data
         });
   
         dispatch(setAlert('Item Removed', 'blue'));
@@ -167,5 +166,7 @@ export const deleteItem = (eventId, itemId) => async dispatch => {
             type: EVENT_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
+
+        console.log(err.response)
     }
 };

@@ -212,19 +212,15 @@ router.delete('/item/:id/:item_id', auth, async (req, res) => {
         if (!item) {
             return res.status(404).json({ msg: 'Item does not exist' });
         }
+        
         // Check user
         if (item.user.toString() !== req.user.id) {
-            console.log(item.user);
-            console.log(req.user.id);
             return res.status(401).json({ msg: 'User not authorized' });
         }
     
         event.items = event.items.filter(
             ({ id }) => id !== req.params.item_id
         );
-
-        console.log(item.user);
-        console.log(req.user.id);
     
         await event.save();
     

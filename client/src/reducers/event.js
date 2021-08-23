@@ -4,8 +4,7 @@ import {
     EVENT_ERROR, 
     CLEAR_EVENT, 
     UPDATE_EVENT, 
-    DELETE_EVENT,
-    REMOVE_ITEM
+    DELETE_EVENT
 } from '../actions/types';
 
 const initialState = {
@@ -48,17 +47,6 @@ function eventReducer(state = initialState, action) {
             return {
                 ...state,
                 event: null
-            };
-        case REMOVE_ITEM:
-            return {
-                ...state,
-                items: {
-                ...state.items,
-                items: state.items.filter(
-                    (item) => item._id !== payload
-                )
-                },
-                loading: false
             };
         default:
             return state;

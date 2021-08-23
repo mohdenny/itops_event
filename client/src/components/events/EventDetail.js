@@ -9,9 +9,8 @@ import moment from 'moment';
 
 const EventDetail = ({ event: { event }, getEventById, match }) => {
     useEffect(() => {
-        getEventById(match.params.id)
+        getEventById(match.params.id);
     }, [getEventById, match.params.id])
-
 
     return (
         <Fragment>
@@ -58,7 +57,7 @@ const EventDetail = ({ event: { event }, getEventById, match }) => {
                                     Item
                                 </label>
                                 <div className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight mb-3">
-                                    { event && event.items.length > 0 ?  (<ItemList items={event.items} />) : 'no items'}
+                                    { event && event.items && event.items.length > 0 ? <ItemList items={event.items} /> : 'no items' }
                                 </div>
                                 <div className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight mb-3">
                                     <ItemForm id={match.params.id} />
