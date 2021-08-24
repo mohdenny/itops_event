@@ -27,8 +27,6 @@ const EventDetail = ({ event: { event }, getEventById, match }) => {
                         </div>
                     </div>
 
-                    <Alert />
-
                     <div className="p-4 border rounded-lg bg-gray-50">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="mb-4">
@@ -57,7 +55,8 @@ const EventDetail = ({ event: { event }, getEventById, match }) => {
                             </div>
                         </div>
 
-                        <div className="border p-4 mb-4 bg-white">
+                        <div className="border p-4 mb-4 bg-gray-100">
+                            <Alert />
                             <label className="block text-gray-700 font-bold mb-2" htmlFor="item">
                                 Item
                             </label>
@@ -72,7 +71,7 @@ const EventDetail = ({ event: { event }, getEventById, match }) => {
                             </div>
                         </div>
 
-                        <div className="border p-4">
+                        <div className="border p-4 mb-4 bg-gray-100">
                             <label className="block text-gray-700 font-bold mb-2" htmlFor="support">
                                 Support
                             </label>

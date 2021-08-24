@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getEvents } from '../../actions/event';
 import Header from '../layout/Header';
 import CardEvent from '../card-event/CardEvent';
-import Calendar from '../calendar/Calendar';
+import MyCalendar from '../calendar/MyCalendar';
 import Alert from '../layout/Alert';
 
 const Dashboard = ({
@@ -20,20 +20,15 @@ const Dashboard = ({
     return (
         <Fragment>
             <Header text={'Dasboard'} />
-            
+
             <main>
                 <div className="max-w-7xl mx-auto py-6">
-
                     <div className="greeting mb-4">
                         Welcome { user && user.name }
                     </div>
-
                     <Alert />
-
                     <CardEvent events={events} />
-
-                    <Calendar events={events} />
-
+                    <MyCalendar events={events} />
                 </div>
             </main>
         </Fragment>

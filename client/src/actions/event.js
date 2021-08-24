@@ -3,6 +3,7 @@ import { setAlert } from './alert';
 import { 
     GET_EVENT, 
     GET_EVENTS, 
+    GET_EVENTS_GUEST,
     EVENT_ERROR, 
     CLEAR_EVENT, 
     UPDATE_EVENT, 
@@ -18,6 +19,23 @@ export const getEvents = () => async dispatch => {
 
         dispatch({
             type: GET_EVENTS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: EVENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        })
+    };
+};
+
+// Get all events for guest landing no auth
+export const getEventsGuest = () => async dispatch => {
+    try {
+        const res = await api.get('/events/guest');
+
+        dispatch({
+            type: GET_EVENTS_GUEST,
             payload: res.data
         });
     } catch (err) {
@@ -194,8 +212,6 @@ export const addSupport = (id, formData) => async dispatch => {
             type: EVENT_ERROR,
             payload: { msg: err.response.statusText, status: err.response.status }
         });
-
-        console.log(err.response)
     }
 };
 

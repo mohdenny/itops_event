@@ -49,6 +49,19 @@ router.post(
 }
 );
   
+// @route    GET api/events landing no auth
+// @desc     Get all events
+// @access   Private
+router.get('/guest', async (req, res) => {
+    try {
+        const events = await Event.find().sort({ date: -1 });
+        res.json(events);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 // @route    GET api/events
 // @desc     Get all events
 // @access   Private
@@ -251,9 +264,9 @@ router.post(
             const event = await Event.findById(req.params.id);
 
             // Check if the onduty has already been supported
-            if (event.supports.some((support) => support.name_support.toString() === req.body.name_support)) {
-                return res.status(400).json({ msg: 'He already exists' });
-            }
+            // if (event.supports.some((support) => support.name_support.toString() === req.body.name_support)) {
+            //     return res.status(400).json({ msg: 'He already exists' });
+            // }
 
             const newSupport = {
                 user: req.user.id,

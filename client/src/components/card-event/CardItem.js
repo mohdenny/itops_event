@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link }  from 'react-router-dom';
 import moment from 'moment';
 
@@ -19,7 +19,9 @@ const CardItem = ({events, sortText }) => {
                 });
 
     return (
-        <div>{renderedList}</div>
+        <Fragment>
+            {renderedList}
+        </Fragment>
     )
 }
 
