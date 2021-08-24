@@ -21,14 +21,14 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         to="/create-event" 
         className={` ${ location.pathname === '/create-event' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
       >
-        Create Event
+        Create
       </Link>
 
       <Link 
         to="/events" 
         className={` ${ location.pathname === '/events' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
       >
-        Manage Event
+        Manage
       </Link>
 
     </Fragment>

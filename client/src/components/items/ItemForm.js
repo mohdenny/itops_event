@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addItem } from '../../actions/event';
-import Alert from '../layout/Alert';
 
 const initialState = {
     name_item: '',
@@ -33,7 +32,6 @@ const ItemForm = ({ id, addItem }) => {
 
     return (
         <form className="p-4 border rounded-lg" onSubmit={onSubmit}>
-            <Alert />
             <div className="grid grid-cols-5 gap-4">
                 <div className="mb-4">
                     <input 

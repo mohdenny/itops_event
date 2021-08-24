@@ -9,8 +9,6 @@ const MyCalendar = ({ events }) => {
       return events.filter(event => event.status === filter)
   }
 
-  console.log(events)
-
     return (
         <div className='max-w-full bg-gray-200 rounded-xl mb-10' style={{ height: '400pt'}}>
           <div className="px-6 py-4 text-center">

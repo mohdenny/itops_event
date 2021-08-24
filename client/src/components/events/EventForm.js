@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createEvent, getEventById, updateEvent } from '../../actions/event';
@@ -163,7 +163,7 @@ const EventForm = ({
                         </div>
                         <div className="flex items-center justify-between mb-4">
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                                Submit
+                                { creatingEvent ? 'Submit' : 'Save' }
                             </button>
                         </div>
                     </form>

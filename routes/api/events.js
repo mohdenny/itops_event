@@ -208,6 +208,7 @@ router.delete('/item/:id/:item_id', auth, async (req, res) => {
         const item = event.items.find(
             (item) => item.id === req.params.item_id
         );
+
         // Make sure item exists
         if (!item) {
             return res.status(404).json({ msg: 'Item does not exist' });
@@ -238,7 +239,7 @@ router.post(
     '/support/:id',
     auth,
     checkObjectId('id'),
-    check('user', 'Onduty support is required').notEmpty(),
+    check('name_support', 'Name is required').notEmpty(),
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -246,18 +247,18 @@ router.post(
         }
     
         try {
+            const user = await User.findById(req.user.id).select('-password');
             const event = await Event.findById(req.params.id);
 
             // Check if the onduty has already been supported
-            if (event.supports.some((support) => support.user.toString() === req.body.user)) {
+            if (event.supports.some((support) => support.name_support.toString() === req.body.name_support)) {
                 return res.status(400).json({ msg: 'He already exists' });
             }
 
-            const user = await User.findById(req.body.user).select('-password');
-
             const newSupport = {
-                user: req.body.user,
-                name: user.name
+                user: req.user.id,
+                name: user.name,
+                name_support: req.body.name_support
             };
 
             event.supports.unshift(newSupport);
@@ -279,19 +280,19 @@ router.delete('/support/:id/:support_id', auth, async (req, res) => {
     try {
         const event = await Event.findById(req.params.id);
     
-        // Pull out item
+        // Pull out support
         const support = event.supports.find(
             (support) => support.id === req.params.support_id
         );
+        
         // Make sure support exists
         if (!support) {
-            return res.status(404).json({ msg: 'Onduty support does not exist' });
+            return res.status(404).json({ msg: 'Support does not exist' });
         }
+        
         // Check user
         if (support.user.toString() !== req.user.id) {
-            console.log(support.user);
-            console.log(req.user.id);
-            return res.status(401).json({ msg: 'Onduty not authorized' });
+            return res.status(401).json({ msg: 'User not authorized' });
         }
     
         event.supports = event.supports.filter(
@@ -306,5 +307,6 @@ router.delete('/support/:id/:support_id', auth, async (req, res) => {
         return res.status(500).send('Server Error');
     }
 });
+
 
 module.exports = router;

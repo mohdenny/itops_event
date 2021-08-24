@@ -52,7 +52,7 @@ const EventItem = ({ events, deleteEvent }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`${setColorStatus(event.status)} px-2 inline-flex text-xs leading-5 font-semibold rounded-full`}>
-                        {event.status}
+                        {event.status === '' ? 'new' : event.status}
                     </span>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">

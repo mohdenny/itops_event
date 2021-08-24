@@ -23,7 +23,7 @@ const Events = ({ getEvents, event: { events } }) => {
                         </div>
                         <Alert />
                         <div className="mb-4">
-                            { events.length > 0 ? 
+                            { events && events.length > 0 ? 
                                 (<EventItem events={events} />) :
                                 <div className="flex justify-center bg-gray-100 px-4 py-4 h-96">
                                     <p className="self-center text-center italic">Not available</p> 

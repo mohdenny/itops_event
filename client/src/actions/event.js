@@ -123,7 +123,7 @@ export const deleteEvent = id => async dispatch => {
 };
 
 //  Add Item
-export const addItem = (id, formData, history) => async dispatch => {
+export const addItem = (id, formData) => async dispatch => {
     try {
         const res = await api.post(`/events/item/${id}`, formData);
 
@@ -151,7 +151,7 @@ export const addItem = (id, formData, history) => async dispatch => {
 };
 
 // Delete item
-export const deleteItem = (eventId, itemId, history) => async dispatch => {
+export const deleteItem = (eventId, itemId) => async dispatch => {
     try {
         const res = await api.delete(`/events/item/${eventId}/${itemId}`);
   
@@ -161,6 +161,55 @@ export const deleteItem = (eventId, itemId, history) => async dispatch => {
         });
   
         dispatch(setAlert('Item Removed', 'blue'));
+    } catch (err) {
+        dispatch({
+            type: EVENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+
+        console.log(err.response)
+    }
+};
+
+//  Add Support
+export const addSupport = (id, formData) => async dispatch => {
+    try {
+        const res = await api.post(`/events/support/${id}`, formData);
+
+        dispatch({
+            type: UPDATE_EVENT,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Support Added', 'blue'));
+
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach((error) => dispatch(setAlert(error.msg, 'red')));
+        }
+
+        dispatch({
+            type: EVENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+
+        console.log(err.response)
+    }
+};
+
+// Delete support
+export const deleteSupport = (eventId, supportId) => async dispatch => {
+    try {
+        const res = await api.delete(`/events/support/${eventId}/${supportId}`);
+  
+        dispatch({
+            type: UPDATE_EVENT,
+            payload: res.data
+        });
+  
+        dispatch(setAlert('Support Removed', 'blue'));
     } catch (err) {
         dispatch({
             type: EVENT_ERROR,
