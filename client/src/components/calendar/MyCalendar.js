@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getEventsGuest } from '../../actions/event';
+import { getEvents, getEventsGuest } from '../../actions/event';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-const MyCalendar = ({ event: { events }, getEventsGuest }) => {
+const MyCalendar = ({ event: { events }, getEventsGuest, getEvents, onlyview }) => {
     const localizer = momentLocalizer(moment);
 
     useEffect(() => {
-      getEventsGuest()
-    }, [getEventsGuest, events])
+      if(onlyview) {
+        getEventsGuest();
+      }
+
+      getEvents();
+
+    }, [onlyview, getEventsGuest, getEvents])
 
     return (
         <div className='max-w-full bg-gray-300 rounded-xl mb-10' style={{ height: '400pt'}}>
@@ -31,6 +36,7 @@ const MyCalendar = ({ event: { events }, getEventsGuest }) => {
 }
 
 Calendar.propTypes = {
+  getEvents: PropTypes.func.isRequired,
   getEventsGuest: PropTypes.func.isRequired,
   event: PropTypes.object.isRequired,
 }
@@ -39,4 +45,4 @@ const mapStateToProps = state => ({
   event: state.event
 })
 
-export default connect(mapStateToProps, { getEventsGuest })(MyCalendar);
+export default connect(mapStateToProps, { getEventsGuest, getEvents })(MyCalendar);
