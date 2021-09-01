@@ -30,11 +30,11 @@ const EventItem = ({ events, deleteEvent }) => {
                                     {event.title}
                                 </Link>
                                 
-                                { event.status === '' ?
+                                { event.items && event.items.length > 0 && event.supports && event.items.length > 0 ?
+                                    '' :
                                     <p className="*font-extralight italic text-xs text-red-900">
                                         <strong>Items</strong> and <strong>Support</strong> are required!
-                                    </p> :
-                                    ''
+                                    </p>
                                 }
                                 
                             </div>
@@ -56,11 +56,12 @@ const EventItem = ({ events, deleteEvent }) => {
                     </span>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    { event.items && event.items.length > 0 && event.supports && event.items.length > 0 ?    
+                        <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-green-500 rounded-md text-white hover:bg-green-800 hover:text-gray-200">Approve</button> :
+                        ''
+                    }
                     <Link to={`/events/event/${event._id}`} className="ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200">Edit</Link>
                     <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white hover:bg-red-800 hover:text-gray-200">Delete</button>
-                    { event.items && event.support && 
-                        <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-green-500 rounded-md text-white hover:bg-green-800 hover:text-gray-200">Approve</button>
-                    }
                 </td>
             </tr>
         )
