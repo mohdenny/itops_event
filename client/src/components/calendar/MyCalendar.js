@@ -6,17 +6,22 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-const MyCalendar = ({ event: { events }, getEventsGuest, getEvents, onlyview }) => {
+const MyCalendar = ({ 
+  event: { events }, 
+  auth: { isAuthenticated }, 
+  getEventsGuest, 
+  getEvents 
+}) => {
     const localizer = momentLocalizer(moment);
 
     useEffect(() => {
-      if(onlyview) {
+      if(!isAuthenticated) {
         getEventsGuest();
       }
 
       getEvents();
 
-    }, [onlyview, getEventsGuest, getEvents])
+    }, [isAuthenticated, getEventsGuest, getEvents])
 
     return (
         <div className='max-w-full bg-gray-300 rounded-xl mb-10' style={{ height: '400pt'}}>
@@ -35,14 +40,16 @@ const MyCalendar = ({ event: { events }, getEventsGuest, getEvents, onlyview }) 
     );
 }
 
-Calendar.propTypes = {
-  getEvents: PropTypes.func.isRequired,
-  getEventsGuest: PropTypes.func.isRequired,
-  event: PropTypes.object.isRequired,
+Calendar.defaultProps = {
+  getEvents: PropTypes.isNotNull,
+  getEventsGuest: PropTypes.isNotNull,
+  event: PropTypes.isNotNull,
+  auth: PropTypes.isNotNull 
 }
 
 const mapStateToProps = state => ({
-  event: state.event
+  event: state.event,
+  auth: state.auth
 })
 
 export default connect(mapStateToProps, { getEventsGuest, getEvents })(MyCalendar);
