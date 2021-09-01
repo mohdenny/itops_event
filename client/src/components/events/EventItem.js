@@ -58,6 +58,9 @@ const EventItem = ({ events, deleteEvent }) => {
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <Link to={`/events/event/${event._id}`} className="ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200">Edit</Link>
                     <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white hover:bg-red-800 hover:text-gray-200">Delete</button>
+                    { event.items && event.support && 
+                        <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-green-500 rounded-md text-white hover:bg-green-800 hover:text-gray-200">Approve</button>
+                    }
                 </td>
             </tr>
         )
