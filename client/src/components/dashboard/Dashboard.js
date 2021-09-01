@@ -28,7 +28,7 @@ const Dashboard = ({
                     </div>
                     <Alert />
                     <CardEvent events={events} />
-                    <MyCalendar onlyview={false} />
+                    <MyCalendar />
                 </div>
             </main>
         </Fragment>
