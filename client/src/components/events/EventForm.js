@@ -71,7 +71,7 @@ const EventForm = ({
 
             <main>
                 <div className="w-full max-w-full m-auto mt-4">
-                    <form className="px-4 py-2 border rounded-lg" onSubmit={onSubmit}>
+                    <form className="px-10 py-2 border rounded-lg" onSubmit={onSubmit}>
                         <div className="text-center font-bold text-lg leading-7 text-gray-900 sm:text-2xl sm:truncate mb-4">
                             Event Form
                         </div>
