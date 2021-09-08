@@ -1,11 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteEvent } from '../../actions/event';
+import { updateStatus, deleteEvent } from '../../actions/event';
 
-const EventItem = ({ events, deleteEvent }) => {
+const EventItem = ({ events, updateStatus, deleteEvent }) => {
+    const [status, setStatus] = useState();
+
+    useEffect(() => {
+        setStatus({status: 'upcoming'});
+    },[])
+
     const setColorStatus = (status) => {
         switch (status) {
             case '':
@@ -57,7 +63,7 @@ const EventItem = ({ events, deleteEvent }) => {
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     { event.items && event.items.length > 0 && event.supports && event.items.length > 0 ?    
-                        <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-green-500 rounded-md text-white hover:bg-green-800 hover:text-gray-200">Approve</button> :
+                        <button onClick={() => updateStatus(event._id, status)} type="button" className={`ml-2 p-1 bg-green-500 rounded-md text-white hover:bg-green-800 hover:text-gray-200 ${event.status === 'upcoming' ? 'hidden' : ''} `} >Approve</button> :
                         ''
                     }
                     <Link to={`/events/event/${event._id}`} className="ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200">Edit</Link>
@@ -109,7 +115,8 @@ const EventItem = ({ events, deleteEvent }) => {
 }
 
 EventItem.propTypes = {
+    updateStatus: PropTypes.func.isRequired,
     deleteEvent: PropTypes.func.isRequired
 }
 
-export default connect(null, { deleteEvent } )(EventItem);
+export default connect(null, { updateStatus, deleteEvent } )(EventItem);
