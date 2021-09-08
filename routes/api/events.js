@@ -321,28 +321,30 @@ router.delete('/support/:id/:support_id', auth, async (req, res) => {
     }
 });
 
-// @route    POST api/events/status/:id
-// @desc     Add events status
+// @route    post api/events/status/:id
+// @desc     update events 
 // @access   Private
-router.post(
+router.put(
     '/status/:id',
     auth,
     checkObjectId('id'),
     async (req, res) => {
-        const errors = validationResult(req);
+
+        const user = await User.findById(req.user.id).select('-password');
+
+        const updateEvent = {
+            status: req.body.status
+        };
+
         try {
-            const user = await User.findById(req.user.id).select('-password');
-            const event = await Event.findById(req.params.id);
 
-            const setStatus = {
-                status: req.body.status
-            };
+            let event = await Event.findByIdAndUpdate(
+                req.params.id ,
+                { $set: updateEvent },
+                { new: true, upsert: true, setDefaultsOnInsert: true }
+            );
 
-            event.status.unshift(setStatus);
-
-            await event.save();
-
-            res.json(event.status);
+            return res.json(event);
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server Error');
