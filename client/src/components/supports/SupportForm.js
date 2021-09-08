@@ -21,7 +21,7 @@ const SupportForm = ({ id, addSupport }) => {
     const { name_support } = formData;
 
     return (
-        <form className="p-4 border rounded-lg" onSubmit={onSubmit}>
+        <form className="p-4 border rounded-lg bg-white" onSubmit={onSubmit}>
             <div className="mb-4">
                 <input 
                     className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
