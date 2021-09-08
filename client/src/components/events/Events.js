@@ -9,7 +9,7 @@ import { getEvents } from '../../actions/event';
 const Events = ({ getEvents, event: { events } }) => {
     useEffect(() => {
         getEvents();
-    }, [getEvents])
+    }, [getEvents, events])
 
     return (
         <Fragment>
