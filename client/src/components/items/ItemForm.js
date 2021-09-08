@@ -31,7 +31,7 @@ const ItemForm = ({ id, addItem }) => {
     } = formData;
 
     return (
-        <form className="p-4 border rounded-lg" onSubmit={onSubmit}>
+        <form className="p-4 border rounded-lg bg-white" onSubmit={onSubmit}>
             <div className="grid grid-cols-5 gap-4">
                 <div className="mb-4">
                     <input 
