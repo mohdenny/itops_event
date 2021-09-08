@@ -21,13 +21,13 @@ const EventDetail = ({ event: { event }, getEventById, match }) => {
 
             <main>
                 <div className="w-full max-w-full m-auto mt-4">
-                    <div className="pt-3 border rounded-lg ">
+                    <div className="pt-3 border rounded-lg bg-gray-50">
                         <div className="text-center font-bold text-lg leading-7 text-gray-900 sm:text-2xl sm:truncate mb-4">
                             { event && event.title }
                         </div>
                     </div>
 
-                    <div className="p-4 border rounded-lg bg-gray-50">
+                    <div className="p-4 border rounded-lg">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="mb-4">
                                 <label className="block text-gray-700 font-bold mb-2" htmlFor="description">
