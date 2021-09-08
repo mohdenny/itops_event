@@ -235,3 +235,31 @@ export const deleteSupport = (eventId, supportId) => async dispatch => {
         console.log(err.response)
     }
 };
+
+// update status
+export const updateStatus = (id, formData) => async (dispatch) => {
+    console.log(formData)
+
+    try {
+        const res = await api.put(`/events/status/${id}`, formData);
+
+        dispatch({
+            type: UPDATE_EVENT,
+            payload: res.data
+        });
+
+        dispatch(setAlert('Status Updated', 'blue'));
+
+    } catch (err) {
+        const errors = err.response.data.errors;
+
+        if (errors) {
+            errors.forEach((error) => dispatch(setAlert(error.msg, 'red')));
+        }
+
+        dispatch({
+            type: EVENT_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+};
