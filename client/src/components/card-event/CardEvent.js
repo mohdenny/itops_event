@@ -6,11 +6,11 @@ const CardEvent = ({ events }) => {
         return events.filter(event => event.status === filter)
     }
 
-    const renderedCard = (events, sortText, color) => {
+    const renderedCard = (events, title, sortText, color) => {
         return (
             <div className={`max-w-full overflow-hidden bg-${color}-200 rounded-xl h-full`}>
                 <div className="px-6 py-4 text-center">
-                    <div className="font-bold text-lg mb-2">New</div>
+                    <div className="font-bold text-lg mb-2">{title}</div>
                 </div>
                 { filteredEvent(sortText).length > 0 ? (
                     <div className={`bg-${color}-100 px-4 py-4 overflow-auto max-h-64`}>
@@ -28,9 +28,9 @@ const CardEvent = ({ events }) => {
     return (
         <Fragment>
             <div className="grid grid-cols-3 gap-4 mb-4">
-                {renderedCard(events, '', 'yellow')}
-                {renderedCard(events, 'upcoming', 'green')}
-                {renderedCard(events, 'ongoing', 'blue')}
+                {renderedCard(events, 'New','', 'yellow')}
+                {renderedCard(events, 'Upcoming','upcoming', 'green')}
+                {renderedCard(events, 'Ongoing', 'ongoing', 'blue')}
             </div>
         </Fragment>
     );
