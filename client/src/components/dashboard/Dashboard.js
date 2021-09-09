@@ -27,8 +27,13 @@ const Dashboard = ({
                         Welcome { user && user.name }
                     </div>
                     <Alert />
-                    <CardEvent events={events} />
-                    <MyCalendar />
+                    <div className="grid grid-rows-2 gap-2 bg-white p-4 max-h-full">
+                        <CardEvent events={events} />
+                        <div className="grid grid-cols-2 gap-4">
+                            <MyCalendar />
+                            <MyCalendar />
+                        </div>
+                    </div>
                 </div>
             </main>
         </Fragment>

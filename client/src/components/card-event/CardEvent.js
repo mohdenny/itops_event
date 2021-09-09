@@ -13,7 +13,7 @@ const CardEvent = ({ events }) => {
                     <div className="font-bold text-lg mb-2">{title}</div>
                 </div>
                 { filteredEvent(sortText).length > 0 ? (
-                    <div className={`bg-${color}-100 px-4 py-4 overflow-auto max-h-64`}>
+                    <div className={`bg-${color}-100 px-4 py-4 overflow-auto max-h-64 h-auto`}>
                         <CardItem events={events} sortText={sortText} />
                     </div>
                 ) : (
@@ -27,10 +27,9 @@ const CardEvent = ({ events }) => {
 
     return (
         <Fragment>
-            <div className="grid grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-2 gap-4 mb-4">
                 {renderedCard(events, 'New','', 'yellow')}
                 {renderedCard(events, 'Upcoming','upcoming', 'green')}
-                {renderedCard(events, 'Ongoing', 'ongoing', 'blue')}
             </div>
         </Fragment>
     );

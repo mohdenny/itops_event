@@ -70,7 +70,7 @@ const EventForm = ({
             <Header text={ creatingEvent ? 'Create Event' : 'Edit Event' } />
 
             <main>
-                <div className="w-full max-w-full m-auto mt-4">
+                <div className="w-full max-w-full m-auto mt-4 bg-white">
                     <form className="px-10 py-2 border rounded-lg" onSubmit={onSubmit}>
                         <div className="text-center font-bold text-lg leading-7 text-gray-900 sm:text-2xl sm:truncate mb-4">
                             Event Form

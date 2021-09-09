@@ -24,18 +24,20 @@ const MyCalendar = ({
     }, [isAuthenticated, getEventsGuest, getEvents])
 
     return (
-        <div className='max-w-full bg-gray-300 rounded-xl mb-10' style={{ height: '400pt'}}>
+        <div className='max-w-full bg-gray-300 rounded-xl mb-10 h-full' >
           <div className="px-6 py-4 text-center">
             <div className="font-bold text-lg mb-2">Calendar</div>
           </div>
-              <Calendar
-                events={events.filter(event => event.status === '')}
+              {/* <Calendar
+                events={events.filter(event => event.status === 'upcoming')}
                 startAccessor={(events) => { return moment(events.start).toDate() }}
                 endAccessor={(events) => { return moment(events.end).toDate() }}
                 defaultDate={moment().toDate()}
                 localizer={localizer}
-                className="bg-gray-200 p-8 rounded-xl"
-              />
+                className="bg-gray-200 p-4"
+              /> */}
+              <div className="border bg-white h-full">ok
+              </div>
         </div>
     );
 }

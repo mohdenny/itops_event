@@ -27,7 +27,7 @@ const Login = ({ login, isAuthenticated }) => {
 
     return (
         <Fragment>
-            <div className="w-full max-w-xs m-auto">
+            <div className="w-full max-w-xs m-auto h-screen">
                 <form className="bg-white shadow-lg rounded border px-8 pt-6 pb-8 mb-4" onSubmit={onSubmit}>
                     <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate mb-4">
                         Sign in

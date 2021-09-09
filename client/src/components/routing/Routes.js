@@ -10,16 +10,18 @@ import EventDetail from '../events/EventDetail';
 
 const Routes = props => {
     return (
-        <section className='container mx-auto p-8'>
-            <Switch>
-                <Route exact path='/register' component={Register} />
-                <Route exact path='/login' component={Login} />
-                <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                <PrivateRoute exact path='/create-event' component={EventForm} />
-                <PrivateRoute exact path='/events' component={Events} />
-                <PrivateRoute exact path='/events/:id' component={EventDetail} />
-                <PrivateRoute exact path='/events/event/:id' component={EventForm} />
-            </Switch>
+        <section className="bg-gray-100">
+            <div className='container mx-auto p-8'>
+                <Switch>
+                    <Route exact path='/register' component={Register} />
+                    <Route exact path='/login' component={Login} />
+                    <PrivateRoute exact path='/dashboard' component={Dashboard} />
+                    <PrivateRoute exact path='/create-event' component={EventForm} />
+                    <PrivateRoute exact path='/events' component={Events} />
+                    <PrivateRoute exact path='/events/:id' component={EventDetail} />
+                    <PrivateRoute exact path='/events/event/:id' component={EventForm} />
+                </Switch>
+            </div>
         </section>
     );
 };

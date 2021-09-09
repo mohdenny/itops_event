@@ -17,7 +17,7 @@ const Events = ({ getEvents, event: { events } }) => {
 
             <main>
                 <div className="max-w-7xl mx-auto py-6">
-                    <div className="px-4 py-2 border rounded-lg h-full">
+                    <div className="px-4 py-2 border rounded-lg h-screen bg-white">
                         <div className="text-center font-bold text-lg leading-7 text-gray-900 sm:text-2xl sm:truncate mb-4">
                             List of Events
                         </div>
