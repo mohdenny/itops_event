@@ -70,97 +70,106 @@ const EventForm = ({
             <Header text={ creatingEvent ? 'Create Event' : 'Edit Event' } />
 
             <main>
-                <div className="w-full max-w-full m-auto mt-4 bg-white">
-                    <form className="px-10 py-2 border rounded-lg" onSubmit={onSubmit}>
+                <div className="w-full max-w-full m-auto mt-4 h-screen">
+                    <form className="px-10 py-2 border rounded-lg bg-white" onSubmit={onSubmit}>
                         <div className="text-center font-bold text-lg leading-7 text-gray-900 sm:text-2xl sm:truncate mb-4">
                             Event Form
                         </div>
                         <Alert />
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
-                                Title
-                            </label>
-                            <input 
-                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
-                                name="title"
-                                id="title" 
-                                type="text" 
-                                placeholder="Vaksin Untuk Indonesia" 
-                                value={title}
-                                onChange={onChange}
-                            />
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-rows-3">
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
+                                        Title
+                                    </label>
+                                    <input 
+                                        className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                        name="title"
+                                        id="title" 
+                                        type="text" 
+                                        placeholder="Vaksin Untuk Indonesia" 
+                                        value={title}
+                                        onChange={onChange}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                                        Description
+                                    </label>
+                                    <input 
+                                        className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                        name="description"
+                                        id="description" 
+                                        type="textarea" 
+                                        rows="3" 
+                                        placeholder="Event Produksi" 
+                                        value={description}
+                                        onChange={onChange}
+                                    />
+                                </div>
+                                
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+                                        Location
+                                    </label>
+                                    <input 
+                                        className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                        name="location"
+                                        id="location" 
+                                        type="text" 
+                                        placeholder="Studio 2 Grand" 
+                                        value={location}
+                                        onChange={onChange}
+                                    />
+                                </div>
+                            </div>
+                            <div className="grid grid-rows-2">
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="start">
+                                        Start
+                                    </label>
+                                    <input 
+                                        className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                        name="start"
+                                        id="start" 
+                                        type="datetime-local" 
+                                        value={start}
+                                        onChange={onChange}
+                                        min={disableThePreviousDay}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="end">
+                                        End
+                                    </label>
+                                    <input 
+                                        className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                        name="end"
+                                        id="end" 
+                                        type="datetime-local" 
+                                        value={end}
+                                        onChange={onChange}
+                                        min={disableThePreviousDay}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="status">
+                                        Status
+                                    </label>
+                                    <input 
+                                        className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                        name="status"
+                                        id="status" 
+                                        type="text" 
+                                        value={status}
+                                        onChange={onChange}
+                                        disabled
+                                        placeholder="new"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
-                                Description
-                            </label>
-                            <input 
-                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
-                                name="description"
-                                id="description" 
-                                type="textarea" 
-                                rows="3" 
-                                placeholder="Vaksin Untuk Indonesia adalah kampanye yang diusung Media Group (Metro TV, Medcom.id dan Media)" 
-                                value={description}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="start">
-                                Start
-                            </label>
-                            <input 
-                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
-                                name="start"
-                                id="start" 
-                                type="datetime-local" 
-                                value={start}
-                                onChange={onChange}
-                                min={disableThePreviousDay}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="end">
-                                End
-                            </label>
-                            <input 
-                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
-                                name="end"
-                                id="end" 
-                                type="datetime-local" 
-                                value={end}
-                                onChange={onChange}
-                                min={disableThePreviousDay}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
-                                Location
-                            </label>
-                            <input 
-                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
-                                name="location"
-                                id="location" 
-                                type="text" 
-                                placeholder="Studio 2 Grand" 
-                                value={location}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <div className="mb-4 hidden">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="status">
-                                Status
-                            </label>
-                            <input 
-                                className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
-                                name="status"
-                                id="status" 
-                                type="text" 
-                                value={status}
-                                onChange={onChange}
-                                disabled
-                            />
-                        </div>
+                        
                         <div className="flex items-center justify-between mb-4">
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                                 { creatingEvent ? 'Submit' : 'Save' }
