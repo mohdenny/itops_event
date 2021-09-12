@@ -26,12 +26,17 @@ const Dashboard = ({
                     <div className="greeting mb-4">
                         Welcome { user && user.name }
                     </div>
-                    <Alert />
-                    <div className="grid grid-rows-2 gap-2 bg-white p-4 max-h-full">
-                        <CardEvent events={events} />
-                        <div className="grid grid-cols-2 gap-4">
-                            <MyCalendar />
-                            <MyCalendar />
+                    <div className="bg-white rounded-lg p-4 max-h-full">
+                        <Alert />
+                        <div className="grid lg:grid-cols-4 md:grid-rows-auto sm:grid-rows-auto gap-4 mb-4">
+                            <CardEvent events={events} title={'new'} sortText={''} color={'yellow'} high={'h-full'} highBody={'max-h-64'} />
+                            <CardEvent events={events} title={'upcoming'} sortText={'upcoming'} color={'green'} high={'h-full'} highBody={'max-h-64'} />
+                            <CardEvent events={events} title={'ongoing'} sortText={'ongoing'} color={'blue'} high={'h-full'} highBody={'max-h-64'} />
+                            <CardEvent events={events} title={'done'} sortText={'done'} color={'gray'} high={'h-full'} highBody={'max-h-64'} />
+                        </div>
+                        <div className="grid lg:grid-cols-2 md:grid-rows-auto gap-4">
+                            <MyCalendar events={events} />
+                            <MyCalendar events={events} />
                         </div>
                     </div>
                 </div>
