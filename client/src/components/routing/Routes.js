@@ -10,7 +10,7 @@ import EventDetail from '../events/EventDetail';
 
 const Routes = props => {
     return (
-        <section className="bg-gray-100">
+        <section className="bg-gray-200">
             <div className='container mx-auto p-8'>
                 <Switch>
                     <Route exact path='/register' component={Register} />
