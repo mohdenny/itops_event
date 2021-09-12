@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import Header from '../layout/Header';
 import EventItem from './EventItem';
-import Alert from '../layout/Alert';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getEvents } from '../../actions/event';
@@ -16,12 +15,11 @@ const Events = ({ getEvents, event: { events } }) => {
             <Header text={'Manage Event'} />
 
             <main>
-                <div className="max-w-7xl mx-auto py-6">
-                    <div className="px-4 py-2 border rounded-lg h-screen bg-white">
+                <div className="max-w-7xl mx-auto py-6 h-screen">
+                    <div className="px-4 py-2 border rounded-lg bg-white">
                         <div className="text-center font-bold text-lg leading-7 text-gray-900 sm:text-2xl sm:truncate mb-4">
                             List of Events
                         </div>
-                        <Alert />
                         <div className="mb-4">
                             { events && events.length > 0 ? 
                                 (<EventItem events={events} />) :
@@ -42,7 +40,7 @@ Events.propTypes = {
     event: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     event: state.event
 });
   
