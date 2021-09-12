@@ -241,7 +241,7 @@ export const updateStatus = (id, formData) => async (dispatch) => {
     console.log(formData)
 
     try {
-        const res = await api.put(`/events/status/${id}`, formData);
+        const res = await api.put(`services/status/${id}`, formData);
 
         dispatch({
             type: UPDATE_EVENT,
