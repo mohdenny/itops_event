@@ -32,7 +32,7 @@ const ItemForm = ({ id, addItem }) => {
 
     return (
         <form className="p-4 border rounded-lg bg-white" onSubmit={onSubmit}>
-            <div className="grid grid-cols-5 gap-4">
+            <div className="grid lg:grid-cols-5 md:grid-rows-auto sm:grid-rows-auto gap-4">
                 <div className="mb-4">
                     <input 
                         className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
