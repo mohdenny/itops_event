@@ -1,36 +1,50 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated }, logout }) => {
+  const [displayMenu, toggleMenu] = useState(false);
   const location = useLocation();
+
+  const linkMenuComputer = (url, text) => {
+    return (
+      <Link 
+        to={url} 
+        className={` ${ location.pathname === url ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`} 
+        aria-current="page"
+      >
+        {text}
+      </Link>
+    )
+  }
+
+  const linkMenuMobile = (url, text) => {
+    return (
+      <Link 
+        to={url} 
+        className={` ${ location.pathname === url ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black block px-3 py-2 rounded-md text-base font-medium`} 
+        aria-current="page"
+      >
+        {text}
+      </Link>
+    )
+  }
 
   const authLeftLinks = (
     <Fragment>
-      <Link 
-        to="/dashboard" 
-        className={` ${ location.pathname === '/dashboard' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`} 
-        aria-current="page"
-      >
-        Dashboard
-      </Link>
+      {linkMenuComputer('/dashboard', 'Dashboard')}
+      {linkMenuComputer('/create-event', 'Create')}
+      {linkMenuComputer('/events', 'Manage')}
+    </Fragment>
+  );
 
-      <Link 
-        to="/create-event" 
-        className={` ${ location.pathname === '/create-event' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
-      >
-        Create
-      </Link>
-
-      <Link 
-        to="/events" 
-        className={` ${ location.pathname === '/events' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
-      >
-        Manage
-      </Link>
-
+  const authLeftLinksMobile = (
+    <Fragment>
+      {linkMenuMobile('/dashboard', 'Dashboard')}
+      {linkMenuMobile('/create-event', 'Create')}
+      {linkMenuMobile('/events', 'Manage')}
     </Fragment>
   );
 
@@ -44,28 +58,21 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   );
 
   const guestLeftLinks = (
-    <Link 
-      to="/" 
-      className={` ${ location.pathname === '/' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
-    >
-      Widget
-    </Link>
+    <Fragment>
+      {linkMenuComputer('/', 'Widget')}
+    </Fragment>
+  );
+
+  const guestLeftLinksMobile = (
+    <Fragment>
+      {linkMenuMobile('/', 'Widget')}
+    </Fragment>
   );
 
   const guestRigthLinks = (
     <Fragment>
-      <Link 
-        to="/register" 
-        className={` ${ location.pathname === '/register' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
-      >
-        Register
-      </Link>
-
-      <Link 
-        to="/login" 
-        className={` ${ location.pathname === '/login' ? 'bg-gray-400 text-white' : 'text-gray-500' }  hover:bg-gray-200 hover:text-black px-3 py-2 rounded-md text-sm font-medium`}
-      >
-      Login</Link>
+      {linkMenuComputer('/register', 'Register')}
+      {linkMenuComputer('/login', 'Login')}
     </Fragment>
   );
 
@@ -75,7 +82,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
         <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="relative flex items-center justify-between h-16">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-              <button type="button" className="inline-flex items-center justify-center p-2 rounded-md text-black-400 hover:text-black hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+              <button onClick={() => toggleMenu(!displayMenu)} type="button" className="inline-flex items-center justify-center p-2 rounded-md text-black-400 hover:text-black hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                 <span className="sr-only">Open main menu</span>
                 <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -108,17 +115,15 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
           </div>
         </div>
 
-        <div className="sm:hidden" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <a href="#" className="bg-gray-400 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
-
-            <a href="#" className="text-gray-500 hover:bg-gray-200 hover:text-black block px-3 py-2 rounded-md text-base font-medium">Team</a>
-
-            <a href="#" className="text-gray-500 hover:bg-gray-200 hover:text-black block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-
-            <a href="#" className="text-gray-500 hover:bg-gray-200 hover:text-black block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
-          </div>
-        </div>
+        {displayMenu &&
+          (
+            <div className="sm:hidden" id="mobile-menu">
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                {isAuthenticated ? authLeftLinksMobile : guestLeftLinksMobile}
+              </div>
+            </div>
+          )
+        }
       </nav>
     </Fragment>
   );
