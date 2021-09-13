@@ -76,7 +76,7 @@ const EventForm = ({
                             Event Form
                         </div>
                         <Alert />
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid lg:grid-cols-2 md:grid-rows-auto lg:grid-rows-auto gap-4">
                             <div className="grid grid-rows-3">
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
@@ -117,7 +117,7 @@ const EventForm = ({
                                         name="location"
                                         id="location" 
                                         type="text" 
-                                        placeholder="Studio 2 Grand" 
+                                        placeholder="Studio 2" 
                                         value={location}
                                         onChange={onChange}
                                     />
