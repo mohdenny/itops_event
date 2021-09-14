@@ -41,7 +41,7 @@ const Dashboard = ({
                     </div>
                 </div>
             </main>
-            <Services />
+            <Services events={events}/>
         </Fragment>
     );
 };
