@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
-import Alert from '../layout/Alert';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getEventsGuest, updateStatus } from '../../actions/event';
+import { updateStatus } from '../../actions/event';
 
-const Services = ({ event: { events }, getEventsGuest, updateStatus }) => {
+const Services = ( props , updateStatus ) => {
+    const [id, setId] = useState();
+    const [status, setStatus] = useState();
 
     const eventDate = (data, format) => {
         return moment(data).format(format)
@@ -23,8 +24,9 @@ const Services = ({ event: { events }, getEventsGuest, updateStatus }) => {
                     if( eventDate(data.start, 'M') >= localDate('M') ) {
                         if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
                             if( data.items.length > 0 && data.supports.length > 0) {
-                                updateStatus(data._id, {status: 'upcoming'})
-                                console.clear();
+                                // updateStatus(data._id, {status: 'upcoming'})
+                                setId(data._id);
+                                setStatus({status: 'upcoming'});
                             } 
                         }
                     }
@@ -40,8 +42,9 @@ const Services = ({ event: { events }, getEventsGuest, updateStatus }) => {
                     if( eventDate(data.start, 'M') >= localDate('M') ) {
                         if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
                             if( data.items.length === 0 || data.supports.length === 0) {
-                                updateStatus(data._id, {status: ''})
-                                console.clear();
+                                // updateStatus(data._id, {status: ''})
+                                setId(data._id);
+                                setStatus({status: ''});
                             }
                         }
                     }
@@ -60,8 +63,9 @@ const Services = ({ event: { events }, getEventsGuest, updateStatus }) => {
                             if( eventDate(data.start, 'H') <= localDate('H') ) {
                                 if( eventDate(data.start, 'mm') <= localDate('mm') ) {
                                     if( data.items.length > 0 && data.supports.length > 0) {
-                                        updateStatus(data._id, {status: 'ongoing'})
-                                        console.clear();
+                                        // updateStatus(data._id, {status: 'ongoing'})
+                                        setId(data._id);
+                                        setStatus({status: 'ongoing'});
                                     }
                                 }
                             }
@@ -73,25 +77,18 @@ const Services = ({ event: { events }, getEventsGuest, updateStatus }) => {
     }
 
     useEffect(() => {
-        getEventsGuest()
-        setNewStatus(events);
-        setUpcomingStatus(events);
-        setOngoingStatus(events);
-        console.log('running');
-    },[getEventsGuest, setNewStatus, setUpcomingStatus, setOngoingStatus, events])
+        updateStatus(id, status);
+        setNewStatus(props.events);
+        setUpcomingStatus(props.events);
+        setOngoingStatus(props.events);
+    },[setNewStatus, setUpcomingStatus, setOngoingStatus, props.events, id, status, updateStatus])
 
-    return <Alert />
+    return null
 
 }
 
 Services.propTypes = {
-    getEventsGuest: PropTypes.func.isRequired,
-    updateStatus: PropTypes.func.isRequired,
-    event: PropTypes.object.isRequired
+    updateStatus: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-    event: state.event
-})
-
-export default connect(mapStateToProps, { getEventsGuest, updateStatus } )(Services);
+export default connect(null, { updateStatus } )(Services);
