@@ -7,7 +7,7 @@ const MyCalendar = ({ events }) => {
     const localizer = momentLocalizer(moment);
 
     return (
-        <div className='max-w-full bg-red-300 overflow-auto rounded-xl'>
+        <div className='max-w-full bg-red-300 overflow-auto rounded-xl' style={{ maxHeight: '700px' }} >
           <div className="px-6 py-4 text-center">
             <div className="font-bold text-lg mb-2">Calendar</div>
           </div>
@@ -19,6 +19,7 @@ const MyCalendar = ({ events }) => {
               localizer={localizer}
               className="bg-red-100 p-4"
               style={{ height: '600px' }} 
+              
             />
         </div>
     );
