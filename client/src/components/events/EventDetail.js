@@ -56,6 +56,14 @@ const EventDetail = ({ event: { event }, getEventById, match }) => {
                                     { event && event.location }
                                 </p>
                             </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-bold mb-2" htmlFor="location">
+                                    Created
+                                </label>
+                                <p className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight mb-3">
+                                    { event && moment(event.date).format("D-MM-YYYY, H:mm")}
+                                </p>
+                            </div>
                         </div>
 
                         <div className="border p-4 mb-4 ">
