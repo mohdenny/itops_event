@@ -6,6 +6,7 @@ import Header from '../layout/Header';
 import CardEvent from '../card-event/CardEvent';
 import MyCalendar from '../calendar/MyCalendar';
 import Alert from '../layout/Alert';
+import Services from '../services/Services';
 
 const Dashboard = ({
     getEvents,
@@ -40,6 +41,7 @@ const Dashboard = ({
                     </div>
                 </div>
             </main>
+            <Services />
         </Fragment>
     );
 };

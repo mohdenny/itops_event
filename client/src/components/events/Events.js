@@ -4,6 +4,7 @@ import EventItem from './EventItem';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getEvents } from '../../actions/event';
+import Services from '../services/Services';
 
 const Events = ({ getEvents, event: { events } }) => {
     useEffect(() => {
@@ -31,6 +32,7 @@ const Events = ({ getEvents, event: { events } }) => {
                     </div>
                 </div>
             </main>
+            <Services />
         </Fragment>
     )
 }

@@ -4,6 +4,7 @@ import CardEvent from '../card-event/CardEvent';
 import { getEventsGuest } from '../../actions/event';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Services from '../services/Services';
 
 const Landing = ({ event: { events }, getEventsGuest }) => {
     const location = useLocation();
@@ -24,6 +25,7 @@ const Landing = ({ event: { events }, getEventsGuest }) => {
                     </div>
                 </div>
             </div>
+            <Services />
         </Fragment>
     )
 } 
