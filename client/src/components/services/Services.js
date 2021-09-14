@@ -80,7 +80,7 @@ const Services = ({ event: { events }, getEventsGuest, updateStatus }) => {
         console.log('running');
     },[getEventsGuest, setNewStatus, setUpcomingStatus, setOngoingStatus, events])
 
-    return <Alert />;
+    return <Alert />
 
 }
 
