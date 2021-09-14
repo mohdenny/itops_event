@@ -32,7 +32,7 @@ const Events = ({ getEvents, event: { events } }) => {
                     </div>
                 </div>
             </main>
-            <Services />
+            <Services events={events} />
         </Fragment>
     )
 }
