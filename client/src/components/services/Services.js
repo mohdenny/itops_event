@@ -74,11 +74,10 @@ const Services = ({ event: { events }, getEventsGuest, updateStatus }) => {
 
     useEffect(() => {
         getEventsGuest()
-        
-            setNewStatus(events);
-            setUpcomingStatus(events);
-            setOngoingStatus(events);
-            console.log('running');
+        setNewStatus(events);
+        setUpcomingStatus(events);
+        setOngoingStatus(events);
+        console.log('running');
     },[getEventsGuest, setNewStatus, setUpcomingStatus, setOngoingStatus, events])
 
     return <Alert />;
