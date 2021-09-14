@@ -9,9 +9,9 @@ const CardEvent = ({ path, events, title, sortText, color, high, highBody=null }
     const renderedItem = (pathname) => {
         switch(`${pathname}`){
             case '/':
-                return (<CardItem events={events} sortText={sortText} titleSize={'3xl'} textSize={'3xl'} />)
+                return (<CardItem events={events} sortText={sortText} titleSize={'text-3xl'} textSize={'text-3xl'} />)
             default:
-                return (<CardItem events={events} sortText={sortText} titleSize={'lg'} textSize={'base'} />)
+                return (<CardItem events={events} sortText={sortText} titleSize={'text-lg'} textSize={'text-base'} />)
         }
     }
 
