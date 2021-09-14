@@ -17,7 +17,7 @@ const MyCalendar = ({ events }) => {
               endAccessor={(events) => { return moment(events.end).toDate() }}
               defaultDate={moment().toDate()}
               localizer={localizer}
-              className="bg-gray-200 p-4"
+              className="bg-red-100 p-4"
               style={{ height: '600px' }} 
             />
         </div>
