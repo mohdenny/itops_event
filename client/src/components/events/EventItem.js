@@ -5,6 +5,8 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateStatus, deleteEvent } from '../../actions/event';
+import { PDFDownloadLink  } from '@react-pdf/renderer';
+import PdfDocument from '../pdf/PdfDocument';
 
 const EventItem = ({ events, updateStatus, deleteEvent }) => {
     const [status, setStatus] = useState();
@@ -87,12 +89,23 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {
                         event.status === 'ongoing' ?   
-                            (<button onClick={() => updateStatus(event._id, status)} type="button" className={`ml-2 p-1 bg-gray-500 rounded-md text-white hover:bg-gray-800 hover:text-gray-200`} >Done</button>) 
+                            (<button onClick={() => updateStatus(event._id, status)} type="button" className="ml-2 p-1 bg-gray-500 rounded-md text-white hover:bg-gray-800 hover:text-gray-200" >Done</button>) 
                         :
                             (<Link to={`/events/event/${event._id}`} className={`${event.status === 'done' ? 'hidden' : '' } ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200`}>Edit</Link>)
                     }
 
-                    <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white hover:bg-red-800 hover:text-gray-200">Delete</button>
+                    {
+                        event.status !== 'ongoing' && <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white hover:bg-red-800 hover:text-gray-200">Delete</button>
+                    }
+
+                    <PDFDownloadLink 
+                        document={<PdfDocument event={event} />}
+                        fileName={`${event.title}.pdf`}
+                        className="ml-2 p-1 bg-yellow-500 rounded-md text-white hover:bg-yellow-800 hover:text-yellow-200"
+                    >
+                        PDF
+                    </PDFDownloadLink >
+                    
                 </td>
             </tr>
         )
