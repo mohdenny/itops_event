@@ -17,7 +17,7 @@ const CardEvent = ({ path, events, title, sortText, color, high, highBody=null }
 
     const renderedCard = () => {
         return (
-            <div className={`max-w-full overflow-hidden bg-${color}-200 rounded-xl text ${high}`}>
+            <div className={`max-w-full overflow-hidden bg-${color}-200 max-h-80 rounded-xl ${high}`}>
                 <div className="px-6 py-4 text-center">
                     <div className="font-bold text-lg mb-2">{title}</div>
                 </div>
