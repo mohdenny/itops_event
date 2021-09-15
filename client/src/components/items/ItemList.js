@@ -29,7 +29,12 @@ const ItemList = ({ event: { event } , items , deleteItem }) => {
                     <div className="text-sm text-gray-900">{item.quantity}</div>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button onClick={() => deleteItem(event._id, item._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white hover:bg-red-800 hover:text-gray-200">Delete</button>
+                    {   
+                        event.status !== 'done' && event.status !=='ongoing' &&
+                            (
+                                <button onClick={() => deleteItem(event._id, item._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white font-semibold hover:bg-red-800 hover:text-gray-200">Delete</button>
+                            )
+                    }
                 </td>
             </tr>
         )
