@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateStatus } from '../../actions/event';
 
-const Services = ( props , updateStatus ) => {
-    const [id, setId] = useState();
-    const [status, setStatus] = useState();
-
+const Services = ({ events , updateStatus }) => {
     const eventDate = (data, format) => {
         return moment(data).format(format)
     }
@@ -24,9 +21,7 @@ const Services = ( props , updateStatus ) => {
                     if( eventDate(data.start, 'M') >= localDate('M') ) {
                         if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
                             if( data.items.length > 0 && data.supports.length > 0) {
-                                // updateStatus(data._id, {status: 'upcoming'})
-                                setId(data._id);
-                                setStatus({status: 'upcoming'});
+                                updateStatus(data._id, {status: 'upcoming'})
                             } 
                         }
                     }
@@ -42,9 +37,7 @@ const Services = ( props , updateStatus ) => {
                     if( eventDate(data.start, 'M') >= localDate('M') ) {
                         if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
                             if( data.items.length === 0 || data.supports.length === 0) {
-                                // updateStatus(data._id, {status: ''})
-                                setId(data._id);
-                                setStatus({status: ''});
+                                updateStatus(data._id, {status: ''})
                             }
                         }
                     }
@@ -63,9 +56,7 @@ const Services = ( props , updateStatus ) => {
                             if( eventDate(data.start, 'H') <= localDate('H') ) {
                                 if( eventDate(data.start, 'mm') <= localDate('mm') ) {
                                     if( data.items.length > 0 && data.supports.length > 0) {
-                                        // updateStatus(data._id, {status: 'ongoing'})
-                                        setId(data._id);
-                                        setStatus({status: 'ongoing'});
+                                        updateStatus(data._id, {status: 'ongoing'})
                                     }
                                 }
                             }
@@ -77,11 +68,10 @@ const Services = ( props , updateStatus ) => {
     }
 
     useEffect(() => {
-        updateStatus(id, status);
-        setNewStatus(props.events);
-        setUpcomingStatus(props.events);
-        setOngoingStatus(props.events);
-    },[setNewStatus, setUpcomingStatus, setOngoingStatus, props.events, id, status, updateStatus])
+        setNewStatus(events);
+        setUpcomingStatus(events);
+        setOngoingStatus(events);
+    },[setNewStatus, setUpcomingStatus, setOngoingStatus, events, updateStatus])
 
     return null
 
