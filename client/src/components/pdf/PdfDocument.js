@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     text: {
-        margin: 18,
+        margin: 8,
         fontSize: 14,
         textAlign: 'justify',
     },
@@ -37,24 +37,6 @@ const styles = StyleSheet.create({
     }
 });
 
-const renderedItem = event => {
-        event.items.map((item, index) => {
-        return (
-            <Text key={index} style={styles.text}>
-                {item.name_item}, {item.fa}, {item.brand}, {item.type}, {item.quantity}
-            </Text>
-        )
-    })
-}
-
-const renderedSupport = event => {
-        event.supports.map((support, index) => {
-        return (
-            <Text key={index} style={styles.text}>{support.name_support}</Text>
-        )
-    })
-}
-
 // Create Document Component
 const PdfDocument = ({ event }) => (
     <Document>
@@ -67,13 +49,34 @@ const PdfDocument = ({ event }) => (
                     <Text style={styles.text}>Description:</Text>
                     <Text style={styles.text}>Location:</Text>
                     <Text style={styles.text}>Item:</Text>
+                    {
+                        Array.from(Array(Number(event.items.length - 1)).keys()).map(c => {
+                            return (
+                                <Text key={c} style={styles.text}>‎‎</Text>
+                            )
+                        })
+                    }
                     <Text style={styles.text}>Support:</Text>
                 </View>
                 <View style={styles.section}>
                     <Text style={styles.text}>{event.description}</Text>
                     <Text style={styles.text}>{event.location}</Text>
-                    {renderedItem(event)}
-                    {renderedSupport(event)}
+                    {
+                        event.items.map((item, index) => {
+                            index = 1 + index
+                            return (
+                                <Text key={item._id} style={styles.text}>{index}. {item.name_item}, {item.fa}, {item.brand}, {item.type}, {item.quantity} unit</Text>
+                            )
+                        })
+                    }
+                    {
+                        event.supports.map((support, index) => {
+                            index = 1 + index
+                            return (
+                                <Text key={support._id} style={styles.text}>{index}. {support.name_support}</Text>
+                            )
+                        })
+                    }
                 </View>
             </View>
             <Text style={styles.footer} fixed>
