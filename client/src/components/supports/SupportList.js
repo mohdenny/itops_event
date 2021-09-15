@@ -17,7 +17,12 @@ const SupportList = ({ event: { event } , supports , deleteSupport }) => {
                     </div>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button onClick={() => deleteSupport(event._id, support._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white hover:bg-red-800 hover:text-gray-200">Delete</button>
+                    {   
+                        event.status !== 'done' && event.status !=='ongoing' &&
+                            (
+                                <button onClick={() => deleteSupport(event._id, support._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white font-semibold hover:bg-red-800 hover:text-gray-200">Delete</button>
+                            )
+                    }
                 </td>
             </tr>
         )
