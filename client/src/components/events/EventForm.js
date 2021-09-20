@@ -26,8 +26,8 @@ const EventForm = ({
 }) => {
 
     const [formData, setFormData] = useState(initialState);
-    const creatingEvent = useRouteMatch('/create-event');
     const disableThePreviousDay = moment().format().slice(0, 16);
+    const creatingEvent = useRouteMatch('/create-event');
 
     useEffect(() => {
         if (!event) {
@@ -50,16 +50,16 @@ const EventForm = ({
         end,
         location,
         status
-    } = formData;
+    } = formData
 
-    const onChange = (e) =>
+    const onChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (!event) {
             createEvent(formData, history);
-            setFormData('');
         }
 
         updateEvent(match.params.id, formData);
@@ -164,7 +164,7 @@ const EventForm = ({
                                         value={status}
                                         onChange={onChange}
                                         disabled
-                                        placeholder="new"
+                                        placeholder={` ${creatingEvent ? 'new' : 'upcoming'} `}
                                     />
                                 </div>
                             </div>

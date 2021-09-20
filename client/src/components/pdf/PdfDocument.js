@@ -49,13 +49,13 @@ const PdfDocument = ({ event }) => (
                     <Text style={styles.text}>Description:</Text>
                     <Text style={styles.text}>Location:</Text>
                     <Text style={styles.text}>Item:</Text>
-                    {
-                        Array.from(Array(Number(event.items.length - 1)).keys()).map(c => {
+                    {/* {
+                        Array.from(Array(Number(event.items.length - 1)).keys()).map(count => {
                             return (
-                                <Text key={c} style={styles.text}>‎‎</Text>
+                                <Text key={count} style={styles.text}>‎‎</Text>
                             )
                         })
-                    }
+                    } */}
                     <Text style={styles.text}>Support:</Text>
                 </View>
                 <View style={styles.section}>
