@@ -9,7 +9,7 @@ import Services from '../services/Services';
 const Events = ({ getEvents, event: { events } }) => {
     useEffect(() => {
         getEvents();
-    }, [getEvents, events])
+    }, [getEvents])
 
     return (
         <Fragment>
