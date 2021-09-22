@@ -19,7 +19,9 @@ const CardEvent = ({ path, events, title, sortText, color, high, highBody }) => 
         return (
             <div className={`max-w-full overflow-hidden bg-${color}-200 rounded-xl ${high}`}>
                 <div className="px-6 py-4 text-center">
-                    <div className="font-bold text-lg mb-2">{title}</div>
+                    <div className="font-bold text-lg mb-2">{title}
+                    <span className={`ml-1 px-1 border rounded-md bg-${color}-400 text-${color}-100`}>{events.filter(event => event.status === sortText).length}</span>
+                </div>
                 </div>
                 { filteredEvent(sortText).length > 0 ? (
                     <div className={`bg-${color}-100 px-4 py-4 overflow-auto ${highBody} ${high}`}>
