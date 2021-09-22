@@ -8,8 +8,11 @@ const styles = StyleSheet.create({
         paddingBottom: 65,
         paddingHorizontal: 35,
     },
-    body: {
+    bodyRow: {
         flexDirection: 'row'
+    },
+    bodyColumn: {
+        flexDirection: 'column'
     },
     section: {
         margin: 10,
@@ -19,12 +22,17 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         textAlign: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
+    },
+    label: {
+        margin: 8,
+        fontSize: 14,
+        textAlign: 'justify',
     },
     text: {
         margin: 8,
         fontSize: 14,
-        textAlign: 'justify',
+        textAlign: 'justify'
     },
     footer: {
         position: 'absolute',
@@ -44,23 +52,20 @@ const PdfDocument = ({ event }) => (
             <Text style={styles.title}>
                 {event.title}
             </Text>
-            <View style={styles.body}>
+            <View style={styles.bodyRow}>
                 <View style={styles.section}>
-                    <Text style={styles.text}>Description:</Text>
-                    <Text style={styles.text}>Location:</Text>
-                    <Text style={styles.text}>Item:</Text>
-                    {/* {
-                        Array.from(Array(Number(event.items.length - 1)).keys()).map(count => {
-                            return (
-                                <Text key={count} style={styles.text}>‎‎</Text>
-                            )
-                        })
-                    } */}
-                    <Text style={styles.text}>Support:</Text>
+                    <Text style={styles.label}>Description:</Text>
+                    <Text style={styles.label}>Location:</Text>
                 </View>
                 <View style={styles.section}>
-                    <Text style={styles.text}>{event.description}</Text>
-                    <Text style={styles.text}>{event.location}</Text>
+                    <Text style={styles.label}>{event.description}</Text>
+                    <Text style={styles.label}>{event.location}</Text>
+                </View>
+            </View>
+            <View style={styles.bodyColumn}>
+                <View style={styles.section}>
+                    <Text style={styles.label}>Item:</Text>
+
                     {
                         event.items.map((item, index) => {
                             index = 1 + index
@@ -69,6 +74,9 @@ const PdfDocument = ({ event }) => (
                             )
                         })
                     }
+                </View>
+                <View style={styles.section}>
+                    <Text style={styles.label}>Support:</Text>
                     {
                         event.supports.map((support, index) => {
                             index = 1 + index
