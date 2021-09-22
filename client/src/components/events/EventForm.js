@@ -123,7 +123,7 @@ const EventForm = ({
                                     />
                                 </div>
                             </div>
-                            <div className="grid grid-rows-2">
+                            <div className="grid grid-rows-3">
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="start">
                                         Start
@@ -152,7 +152,7 @@ const EventForm = ({
                                         min={disableThePreviousDay}
                                     />
                                 </div>
-                                <div className="mb-4">
+                                <div className="mb-4 hidden">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="status">
                                         Status
                                     </label>
