@@ -30,7 +30,7 @@ const Dashboard = ({
                     <Alert />
                     <div className="grid lg:grid-cols-2 sm:grid-rows-auto gap-4 p-4 bg-white rounded-lg h-full max-w-full">
                         <div className="grid lg:grid-cols-2 sm:grid-rows-auto gap-4 mb-4">
-                            <CardEvent events={events} title={'new'} sortText={''} color={'yellow'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
+                            <CardEvent events={events} title={'new'} sortText={'new'} color={'yellow'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
                             <CardEvent events={events} title={'upcoming'} sortText={'upcoming'} color={'green'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
                             <CardEvent events={events} title={'ongoing'} sortText={'ongoing'} color={'blue'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
                             <CardEvent events={events} title={'done'} sortText={'done'} color={'gray'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
