@@ -16,7 +16,7 @@ const Services = ({ events , updateStatus }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const setUpcomingStatus = datas => {
         datas.forEach(data => {
-            if(data.status !== 'upcoming' && data.status === ''){
+            if(data.status !== 'upcoming' && data.status === 'new'){
                 if( eventDate(data.start, 'd') >= localDate('d') ) {
                     if( eventDate(data.start, 'M') >= localDate('M') ) {
                         if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
@@ -32,12 +32,12 @@ const Services = ({ events , updateStatus }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const setNewStatus = datas => {
         datas.forEach(data => {
-            if(data.status !== ''){
+            if(data.status === '' || data.status === 'upcoming'){
                 if( eventDate(data.start, 'd') >= localDate('d') ) {
                     if( eventDate(data.start, 'M') >= localDate('M') ) {
                         if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
                             if( data.items.length === 0 || data.supports.length === 0) {
-                                updateStatus(data._id, {status: ''})
+                                updateStatus(data._id, {status: 'new'})
                             }
                         }
                     }
