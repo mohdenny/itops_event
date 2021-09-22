@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Alert from '../layout/Alert';
 import moment from 'moment';
@@ -7,15 +7,11 @@ import { connect } from 'react-redux';
 import { updateStatus, deleteEvent } from '../../actions/event';
 import { PDFDownloadLink  } from '@react-pdf/renderer';
 import PdfDocument from '../pdf/PdfDocument';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const EventItem = ({ events, updateStatus, deleteEvent }) => {
-    const [status, setStatus] = useState();
-    const [text, setText] = useState('');
-    const [filteredEvent, setFilteredEvent] = useState(events.sort((a, b) => a.start.localeCompare(b.start)));
-
-    useEffect(() => {
-        setStatus({status: 'done'});
-    },[events, text])
+    const [filteredEvent, setFilteredEvent] = useState(events);
+    const [items, setItems] = useState(Number(events.length));
 
     const setColorStatus = status => {
         switch (status) {
@@ -35,7 +31,7 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
     }
 
     const warningRequired = (event, color, text)  => {
-        if( event.items && event.items.length === 0 && event.supports && event.supports.length === 0 ) {
+        if( event.items.length === 0 || event.supports.length === 0 ) {
             return(
                 <p className={`*font-extralight italic text-xs text-${color}-900`}>
                     {text}
@@ -54,19 +50,39 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
         }
     } 
 
-    const filterButton = (filterText, events) => {
-        setText(filterText)
+    const checkStatus = (events, text) => {
+        const matching = (events) => 
+            events.forEach(event => {
+                return event.status.includes(text)
+            })
 
-        events.forEach(event => {
-            if (event.status.includes(text)){
-                setFilteredEvent(events.sort((a, b) => a.start.localeCompare(b.start)).filter(event => event.status === text))
-            }
-
-            console.log(event.status.includes(text))
-        })
-
-        console.log(text)
+        if (matching){
+            setFilteredEvent(events.filter(event => event.status === text))
+        }
     }
+
+    const filterButton = (text) => {
+        checkStatus(events, text)
+    }
+
+    const renderedFilterButton = (events, text, color) => {
+        return (
+            <div>
+                <button className={`border rounded-md p-1 bg-${color}-200 text-${color}-800 hover:bg-${color}-800 hover:text-${color}-200`} onClick={() => filterButton(text)} type="button">
+                    {text}
+                    <span className={`ml-1 px-1 border rounded-md bg-${color}-400 text-${color}-100`}>{events.filter(event => event.status === text).length}</span>
+                </button>
+            </div>
+        )
+    }
+
+    const fetchMoreData = () => {
+        setTimeout(() => {
+          setItems(items.concat(Number(2)));
+        }, 1500);
+    };
+
+    // .sort((a, b) => a.start.localeCompare(b.start))
 
     const renderedList = filteredEvent.map(event => {
         return (
@@ -105,7 +121,7 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {
                         event.status === 'ongoing' ?   
-                            (<button onClick={() => updateStatus(event._id, status)} type="button" className="ml-2 p-1 bg-gray-500 rounded-md text-white font-semibold hover:bg-gray-800 hover:text-gray-200" >Done</button>) 
+                            (<button onClick={() => updateStatus(event._id, 'done')} type="button" className="ml-2 p-1 bg-gray-500 rounded-md text-white font-semibold hover:bg-gray-800 hover:text-gray-200" >Done</button>) 
                         :
                             (<Link to={`/events/event/${event._id}`} className={`${event.status === 'done' ? 'hidden' : '' } ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200`}>Edit</Link>)
                     }
@@ -134,50 +150,51 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                     <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div className="shadow overflow-hidden border-b border-gray-200 bg-white sm:rounded-lg">
                         <Alert />
-                            <div className="grid grid-cols-5 gap-4 justify-items-center border mb-2">
-                                <div className="border">
-                                    <button onClick={() => filterButton('new', events)} type="button">new</button>
-                                </div>
-                                <div className="border">
-                                    <button onClick={() => filterButton('upcoming', events)} type="button">upcoming</button>
-                                </div>
-                                <div className="border">
-                                    <button onClick={() => filterButton('ongoing', events)} type="button">ongoing</button>
-                                </div>
-                                <div className="border">
-                                    <button onClick={() => filterButton('done', events)} type="button">done</button>
-                                </div>
-                                <div className="border">
-                                    <button onClick={() => filterButton('', events)} type="button">clear</button>
+                            <div className="grid grid-cols-5 gap-4 justify-items-center mb-2">     
+                                {renderedFilterButton(events, 'new', 'yellow')}
+                                {renderedFilterButton(events, 'upcoming', 'green')}
+                                {renderedFilterButton(events, 'ongoing', 'blue')}
+                                {renderedFilterButton(events, 'done', 'gray')}
+                                <div>
+                                    <button className="border rounded-md p-1 bg-red-100 text-red-500" onClick={() => setFilteredEvent(events)} type="button">clear filter</button>
                                 </div>
                             </div>
-                            <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
-                                    <tr>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Title
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Schedule
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Location
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Created
-                                        </th>
-                                        <th scope="col" className="relative px-6 py-3">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    {renderedList}
-                                </tbody>
-                            </table>
+
+                            <InfiniteScroll
+                                dataLength={events.length}
+                                next={fetchMoreData}
+                                hasMore={true}
+                                loader={<h4>Loading more 2 itens...</h4>}
+                                >
+
+                                <table className="min-w-full divide-y divide-gray-200">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Title
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Schedule
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Location
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Status
+                                            </th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Created
+                                            </th>
+                                            <th scope="col" className="relative px-6 py-3">
+                                                <span className="sr-only">Edit</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        {renderedList}
+                                    </tbody>
+                                </table>
+                            </InfiniteScroll>
                         </div>
                     </div>
                 </div>
