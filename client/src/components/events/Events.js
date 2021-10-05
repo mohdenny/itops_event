@@ -16,7 +16,7 @@ const Events = ({ getEvents, event: { events } }) => {
             <Header text={'Manage Event'} />
 
             <main>
-                <div className="max-w-7xl mx-auto py-6 h-screen">
+                <div className="max-w-7xl mx-auto py-6 h-full">
                     <div className="px-4 py-2 border rounded-lg bg-white">
                         <div className="text-center font-bold text-lg leading-7 text-gray-900 sm:text-2xl sm:truncate mb-4">
                             List of Events

@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Pagination } from '../layout/Pagination';
 import Alert from '../layout/Alert';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -7,11 +8,9 @@ import { connect } from 'react-redux';
 import { updateStatus, deleteEvent } from '../../actions/event';
 import { PDFDownloadLink  } from '@react-pdf/renderer';
 import PdfDocument from '../pdf/PdfDocument';
-import InfiniteScroll from "react-infinite-scroll-component";
 
 const EventItem = ({ events, updateStatus, deleteEvent }) => {
     const [filteredEvent, setFilteredEvent] = useState(events);
-    const [items, setItems] = useState(Number(events.length));
 
     const setColorStatus = status => {
         switch (status) {
@@ -75,12 +74,6 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
             </div>
         )
     }
-
-    const fetchMoreData = () => {
-        setTimeout(() => {
-          setItems(items.concat(Number(2)));
-        }, 1500);
-    };
 
     // .sort((a, b) => a.start.localeCompare(b.start))
 
@@ -160,13 +153,7 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                                 </div>
                             </div>
 
-                            <InfiniteScroll
-                                dataLength={events.length}
-                                next={fetchMoreData}
-                                hasMore={true}
-                                loader={<h4>Loading more 2 itens...</h4>}
-                                >
-
+                            <Pagination data={events} perPage={10}>
                                 <table className="min-w-full divide-y divide-gray-200">
                                     <thead className="bg-gray-50">
                                         <tr>
@@ -194,7 +181,7 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                                         {renderedList}
                                     </tbody>
                                 </table>
-                            </InfiniteScroll>
+                            </Pagination>
                         </div>
                     </div>
                 </div>
