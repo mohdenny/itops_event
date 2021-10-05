@@ -27,16 +27,18 @@ const Dashboard = ({
                     <div className="greeting mb-4">
                         Welcome { user && user.name }
                     </div>
-                    <Alert />
-                    <div className="grid lg:grid-cols-2 sm:grid-rows-auto gap-4 p-4 bg-white rounded-lg h-full max-w-full">
-                        <div className="grid lg:grid-cols-2 sm:grid-rows-auto gap-4 mb-4">
-                            <CardEvent events={events} title={'new'} sortText={'new'} color={'yellow'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
-                            <CardEvent events={events} title={'upcoming'} sortText={'upcoming'} color={'green'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
-                            <CardEvent events={events} title={'ongoing'} sortText={'ongoing'} color={'blue'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
-                            <CardEvent events={events} title={'done'} sortText={'done'} color={'gray'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
-                        </div>
-                        <div className="grid lg:grid-cols-1 sm:grid-rows-auto gap-4">
-                            <MyCalendar events={events} />
+                    <div className="bg-white rounded-lg p-4 h-full max-w-full">
+                        <Alert />
+                        <div className="grid lg:grid-cols-2 sm:grid-rows-auto gap-4 h-full max-w-full">
+                            <div className="grid lg:grid-cols-2 sm:grid-rows-auto gap-4 mb-4">
+                                <CardEvent events={events} title={'new'} sortText={'new'} color={'yellow'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
+                                <CardEvent events={events} title={'upcoming'} sortText={'upcoming'} color={'green'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
+                                <CardEvent events={events} title={'ongoing'} sortText={'ongoing'} color={'blue'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
+                                <CardEvent events={events} title={'done'} sortText={'done'} color={'gray'} high={'h-full'} highBody={'max-h-64 min-h-64'} />
+                            </div>
+                            <div className="grid lg:grid-cols-1 sm:grid-rows-auto gap-4">
+                                <MyCalendar events={events} />
+                            </div>
                         </div>
                     </div>
                 </div>
