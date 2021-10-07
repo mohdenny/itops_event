@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Pagination } from '../layout/Pagination';
+import Pagination from '../../hooks/Pagination/Pagination';
 import Alert from '../layout/Alert';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -9,8 +9,12 @@ import { updateStatus, deleteEvent } from '../../actions/event';
 import { PDFDownloadLink  } from '@react-pdf/renderer';
 import PdfDocument from '../pdf/PdfDocument';
 
+let PageSize = 10;
+
 const EventItem = ({ events, updateStatus, deleteEvent }) => {
-    const [filteredEvent, setFilteredEvent] = useState(events);
+    const [filterEvent, setFilterEvent] = useState(events);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [sortEvent, setSortEvent] = useState({ from: '', to: '' });
 
     const setColorStatus = status => {
         switch (status) {
@@ -50,14 +54,16 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
     } 
 
     const checkStatus = (events, text) => {
-        const matching = (events) => 
+        const matching = () => 
             events.forEach(event => {
                 return event.status.includes(text)
             })
 
         if (matching){
-            setFilteredEvent(events.filter(event => event.status === text))
+            setFilterEvent(events.filter(event => event.status === text))
         }
+
+        console.log(filterEvent)
     }
 
     const filterButton = (text) => {
@@ -75,16 +81,21 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
         )
     }
 
-    // .sort((a, b) => a.start.localeCompare(b.start))
+    const currentTableData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return filterEvent.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage, filterEvent]);
 
-    const renderedList = filteredEvent.map(event => {
+
+    const renderedList = currentTableData.sort((a, b) => b.date.localeCompare(a.date)).map(event => {
         return (
             <tr key={event._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                         <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">
-                                <Link to={`/events/${event._id}`} className="text-lg hover:text-gray-500">
+                                <Link to={`/events/${event._id}`} className="text-base hover:text-gray-500">
                                     {event.title}
                                 </Link>
                                 
@@ -110,6 +121,9 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{formatDate(event.date)} </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{event.edited === null ? '-' : formatDate(event.edited)} </div>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {
@@ -143,45 +157,67 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                     <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div className="shadow overflow-hidden border-b border-gray-200 bg-white sm:rounded-lg">
                         <Alert />
-                            <div className="grid grid-cols-5 gap-4 justify-items-center mb-2">     
+                            <div className="grid grid-cols-6 gap-4 justify-items-center mb-2">     
                                 {renderedFilterButton(events, 'new', 'yellow')}
                                 {renderedFilterButton(events, 'upcoming', 'green')}
                                 {renderedFilterButton(events, 'ongoing', 'blue')}
                                 {renderedFilterButton(events, 'done', 'gray')}
+                                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+                                        State
+                                    </label>
+                                    <div class="relative flex-row">
+                                        <select class="block appearance-none w-auto bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                                            <option>New Mexico</option>
+                                            <option>Missouri</option>
+                                            <option>Texas</option>
+                                        </select>
+                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                        </div>
+                                    </div>
+                                    </div>
                                 <div>
-                                    <button className="border rounded-md p-1 bg-red-100 text-red-500" onClick={() => setFilteredEvent(events)} type="button">clear filter</button>
+                                    <button className="border rounded-md p-1 bg-red-100 text-red-500 hover:bg-red-800 hover:text-red-200" onClick={() => setFilterEvent(events)} type="button">Clear filter</button>
                                 </div>
                             </div>
-
-                            <Pagination data={events} perPage={10}>
-                                <table className="min-w-full divide-y divide-gray-200">
-                                    <thead className="bg-gray-50">
-                                        <tr>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Title
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Schedule
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Location
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Status
-                                            </th>
-                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Created
-                                            </th>
-                                            <th scope="col" className="relative px-6 py-3">
-                                                <span className="sr-only">Edit</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="bg-white divide-y divide-gray-200">
-                                        {renderedList}
-                                    </tbody>
-                                </table>
-                            </Pagination>
+                            <table className="min-w-full divide-y divide-gray-200">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Title
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Schedule
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Location
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Status
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Created
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Edited
+                                        </th>
+                                        <th scope="col" className="relative px-6 py-3">
+                                            <span className="sr-only">Edit</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white divide-y divide-gray-200">
+                                    {renderedList}
+                                </tbody>
+                            </table>
+                            <Pagination
+                                className="container"
+                                currentPage={currentPage}
+                                totalCount={filterEvent.length}
+                                pageSize={PageSize}
+                                onPageChange={page => setCurrentPage(page)}
+                            />
                         </div>
                     </div>
                 </div>
