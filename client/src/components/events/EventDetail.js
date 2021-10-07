@@ -56,13 +56,23 @@ const EventDetail = ({ event: { event }, getEventById, match }) => {
                                     { event && event.location }
                                 </p>
                             </div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700 font-bold mb-2" htmlFor="location">
-                                    Created
-                                </label>
-                                <p className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight mb-3">
-                                    { event && moment(event.date).format("D-MM-YYYY, H:mm") }
-                                </p>
+                            <div className="mb-4 grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-gray-700 font-bold mb-2" htmlFor="location">
+                                        Created
+                                    </label>
+                                    <p className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight mb-3">
+                                        { event && moment(event.date).format("D-MM-YYYY, H:mm") }
+                                    </p>
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700 font-bold mb-2" htmlFor="location">
+                                        Edited
+                                    </label>
+                                    <p className="appearance-none w-full py-2 px-3 text-gray-700 leading-tight mb-3">
+                                        { event && event.edited ? moment(event.edited).format("D-MM-YYYY, H:mm") : '-' }
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
