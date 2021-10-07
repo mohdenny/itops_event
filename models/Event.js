@@ -82,6 +82,10 @@ const EventSchema = new Schema ({
     status: {
         type: String
     },
+    edited: {
+        type: Date,
+        default: null
+    },
     date: {
         type: Date,
         default: Date.now
