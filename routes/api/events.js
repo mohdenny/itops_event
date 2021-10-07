@@ -109,6 +109,7 @@ router.put(
             return res.status(400).json({ errors: errors.array() });
         }
 
+        const event = await Event.findById(req.params.id);
         const user = await User.findById(req.user.id).select('-password');
         const { title, description, location, start, end, status }= req.body;
 
@@ -121,7 +122,9 @@ router.put(
             location: location,
             start: start,
             end: end,
-            status: status
+            status: status,
+            edited: Date.now(),
+            date: event.date
         };
 
         try {
