@@ -14,7 +14,7 @@ let PageSize = 10;
 const EventItem = ({ events, updateStatus, deleteEvent }) => {
     const [filterEvent, setFilterEvent] = useState(events);
     const [currentPage, setCurrentPage] = useState(1);
-    const [sortEvent, setSortEvent] = useState();
+    const [sortEvent, setSortEvent] = useState({term: '', from: 'a.start', to: 'b.start'});
 
     const setColorStatus = status => {
         switch (status) {
@@ -81,12 +81,20 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
         )
     }
 
-    const handleSortChange  = (event) => {
-        setSortEvent(event.target.value);
-        
-        switch(sortEvent){
-            case 'newCreated'
-        }
+    const handleOnChange = (e) => {
+        setSortEvent({...sortEvent, term: e.target.value})
+
+        switch(sortEvent.term){
+            case 'newCreated':
+                return setSortEvent({...sortEvent, from: 'a.date', to: 'b.date' })
+            default:
+                return setSortEvent({...sortEvent, term: '',from: 'a.start', to: 'b.start'})
+            // case 'lastCreated'
+            // case 'newEdited'
+            // case 'lastEdited'
+            // case 'asce'
+            // case 'desc'
+        } 
     }
 
     const currentTableData = useMemo(() => {
@@ -96,7 +104,7 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
     }, [currentPage, filterEvent]);
 
 
-    const renderedList = currentTableData.sort((a, b) => b.date.localeCompare(a.date)).map(event => {
+    const renderedList = currentTableData.sort((a, b) => sortEvent.from.localeCompare(sortEvent.to)).map(event => {
         return (
             <tr key={event._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -173,14 +181,14 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                                 <div className="w-full px-3">
                                     <div className="relative w-full ">
                                         <div className="w-auto">
-                                            <select value={sortEvent} onChange={handleSortChange} className="inline-block appearance-none w-auto bg-gray-200 border border-gray-200 text-gray-700 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                                                <option value={null}>None Select</option>
-                                                <option value='newCreated'>New Created</option>
-                                                <option value='lastCreated'>Last Created</option>
-                                                <option value='newEdited'>New Edited</option>
-                                                <option value='lastEdited'>Last Edited</option>
-                                                <option value='asce'>A - Z</option>
-                                                <option value='desc'>Z - A</option>
+                                            <select value={sortEvent.term} onChange={handleOnChange} className="inline-block appearance-none w-auto bg-gray-200 border border-gray-200 text-gray-700 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                                                <option value={null} {null === sortEvent.term ? 'selected' : ''}>None Select</option>
+                                                <option value='newCreated' {'newCreated' === sortEvent.term ? 'selected' : ''}>New Created</option>
+                                                <option value='lastCreated' {'lastCreated' === sortEvent.term ? 'selected' : ''}>Last Created</option>
+                                                <option value='newEdited' {'newEdited' === sortEvent.term ? 'selected' : ''} >New Edited</option>
+                                                <option value='lastEdited' {'lastEdited' === sortEvent.term ? 'selected' : ''}>Last Edited</option>
+                                                <option value='asce' {'asce' === sortEvent.term ? 'selected' : ''}>A - Z</option>
+                                                <option value='desc' {'desc' === sortEvent.term ? 'selected' : ''} >Z - A</option>
                                             </select>
                                         </div>
                                         <div className="pointer-events-none absolute inset-y-0 right-5 flex items-center px-2 text-gray-700">
