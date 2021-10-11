@@ -149,13 +149,13 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {
                         event.status === 'ongoing' ?   
-                            (<button onClick={() => updateStatus(event._id, 'done')} type="button" className="ml-2 p-1 bg-gray-500 rounded-md text-white font-semibold hover:bg-gray-800 hover:text-gray-200" >Done</button>) 
+                            (<button onClick={() => {updateStatus(event._id, {status: 'done'}); setFilterEvent(events);}} type="button" className="ml-2 p-1 bg-gray-500 rounded-md text-white font-semibold hover:bg-gray-800 hover:text-gray-200" >Done</button>) 
                         :
                             (<Link to={`/events/event/${event._id}`} className={`${event.status === 'done' ? 'hidden' : '' } ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200`}>Edit</Link>)
                     }
 
                     {
-                        event.status !== 'ongoing' && event.status !== 'done' && <button onClick={() => deleteEvent(event._id)} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white font-semibold hover:bg-red-800 hover:text-gray-200">Delete</button>
+                        event.status !== 'ongoing' && event.status !== 'done' && <button onClick={() => {deleteEvent(event._id); setFilterEvent(events);}} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white font-semibold hover:bg-red-800 hover:text-gray-200">Delete</button>
                     }
 
                     <PDFDownloadLink 
