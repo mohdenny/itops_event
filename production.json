@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb://itopsevent:itopsevent@cluster0-shard-00-02.uwtyg.mongodb.net:27017,cluster0-shard-00-02.uwtyg.mongodb.net:27017,cluster0-shard-00-02.uwtyg.mongodb.net:27017/itopsevent?ssl=true&replicaSet=cluster0-shard-00-02&authSource=admin&retryWrites=true",
+    "jwtSecret": "mysecrettoken"
+}
