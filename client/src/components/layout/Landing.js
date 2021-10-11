@@ -15,7 +15,7 @@ const Landing = ({ event: { events }, getEventsGuest }) => {
 
     return (
         <Fragment>
-            <div className="bg-gray-200">
+            <div className="bg-white">
                 <div className="max-w-7xl mx-auto py-6 px-6 h-screen">
                     <div className="p-4 bg-white rounded-lg">
                         <div className="grid lg:grid-cols-2 md:grid-rows-auto sm:grid-rows-auto gap-4">
