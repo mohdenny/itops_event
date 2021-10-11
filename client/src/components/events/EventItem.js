@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useMemo } from 'react';
+import React, { Fragment, useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Pagination from '../../hooks/Pagination/Pagination';
 import Alert from '../layout/Alert';
@@ -14,7 +14,28 @@ let PageSize = 10;
 const EventItem = ({ events, updateStatus, deleteEvent }) => {
     const [filterEvent, setFilterEvent] = useState(events);
     const [currentPage, setCurrentPage] = useState(1);
-    const [sortEvent, setSortEvent] = useState({term: '', from: 'a.start', to: 'b.start'});
+    const [option, setOption] = useState('');
+    const [sortTerm, setSortTerm] = useState('start');
+
+    useEffect(() => {
+        const sortingEvent = () => {
+            switch(option){
+                case 'newCreated':
+                    return setSortTerm('date')
+                default:
+                    return setSortTerm('start')
+                // case 'lastCreated'
+                // case 'newEdited'
+                // case 'lastEdited'
+                // case 'asce'
+                // case 'desc'
+            } 
+        }
+
+        sortingEvent()
+        
+        console.log(option)
+    }, [option])
 
     const setColorStatus = status => {
         switch (status) {
@@ -81,22 +102,6 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
         )
     }
 
-    const handleOnChange = (e) => {
-        setSortEvent({...sortEvent, term: e.target.value})
-
-        switch(sortEvent.term){
-            case 'newCreated':
-                return setSortEvent({...sortEvent, from: 'a.date', to: 'b.date' })
-            default:
-                return setSortEvent({...sortEvent, term: '',from: 'a.start', to: 'b.start'})
-            // case 'lastCreated'
-            // case 'newEdited'
-            // case 'lastEdited'
-            // case 'asce'
-            // case 'desc'
-        } 
-    }
-
     const currentTableData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
@@ -104,7 +109,7 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
     }, [currentPage, filterEvent]);
 
 
-    const renderedList = currentTableData.sort((a, b) => sortEvent.from.localeCompare(sortEvent.to)).map(event => {
+    const renderedList = currentTableData.sort((a, b) => b.date.localeCompare(a.date)).map(event => {
         return (
             <tr key={event._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -138,9 +143,9 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                 <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{formatDate(event.date)} </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                {/* <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{event.edited === null ? '-' : formatDate(event.edited)} </div>
-                </td>
+                </td> */}
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {
                         event.status === 'ongoing' ?   
@@ -173,29 +178,29 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                     <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <div className="shadow overflow-hidden border-b border-gray-200 bg-white sm:rounded-lg">
                         <Alert />
-                            <div className="grid grid-cols-6 gap-4 justify-items-center mb-2">     
+                            <div className="grid grid-cols-5 gap-4 justify-items-center mb-2">     
                                 {renderedFilterButton(events, 'new', 'yellow')}
                                 {renderedFilterButton(events, 'upcoming', 'green')}
                                 {renderedFilterButton(events, 'ongoing', 'blue')}
                                 {renderedFilterButton(events, 'done', 'gray')}
-                                <div className="w-full px-3">
+                                {/* <div className="w-full px-3">
                                     <div className="relative w-full ">
                                         <div className="w-auto">
-                                            <select value={sortEvent.term} onChange={handleOnChange} className="inline-block appearance-none w-auto bg-gray-200 border border-gray-200 text-gray-700 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                                                <option value={null} {null === sortEvent.term ? 'selected' : ''}>None Select</option>
-                                                <option value='newCreated' {'newCreated' === sortEvent.term ? 'selected' : ''}>New Created</option>
-                                                <option value='lastCreated' {'lastCreated' === sortEvent.term ? 'selected' : ''}>Last Created</option>
-                                                <option value='newEdited' {'newEdited' === sortEvent.term ? 'selected' : ''} >New Edited</option>
-                                                <option value='lastEdited' {'lastEdited' === sortEvent.term ? 'selected' : ''}>Last Edited</option>
-                                                <option value='asce' {'asce' === sortEvent.term ? 'selected' : ''}>A - Z</option>
-                                                <option value='desc' {'desc' === sortEvent.term ? 'selected' : ''} >Z - A</option>
+                                            <select value={option.value} onChange={(e) => setOption(e.target.value)} className="inline-block appearance-none w-auto bg-gray-200 border border-gray-200 text-gray-700 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
+                                                <option value=''>None Select</option>
+                                                <option value='newCreated'>New Created</option>
+                                                <option value='lastCreated'>Last Created</option>
+                                                <option value='newEdited'>New Edited</option>
+                                                <option value='lastEdited'>Last Edited</option>
+                                                <option value='asce'>A - Z</option>
+                                                <option value='desc'>Z - A</option>
                                             </select>
                                         </div>
                                         <div className="pointer-events-none absolute inset-y-0 right-5 flex items-center px-2 text-gray-700">
                                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                                 <div>
                                     <button className="border rounded-md p-1 bg-red-100 text-red-500 hover:bg-red-800 hover:text-red-200" onClick={() => setFilterEvent(events)} type="button">Clear Filter</button>
                                 </div>
@@ -218,9 +223,9 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Created
                                         </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        {/* <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Edited
-                                        </th>
+                                        </th> */}
                                         <th scope="col" className="relative px-6 py-3">
                                             <span className="sr-only">Edit</span>
                                         </th>
