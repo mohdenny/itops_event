@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import logoOnly from '../../assets/image/logo/logo_only.png';
 import logoWithText from '../../assets/image/logo/logo_with_text.png';
+import logoWithTextFull from '../../assets/image/logo/logo_with_text_full.png';
 import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -61,13 +62,15 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 
   const guestLeftLinks = (
     <Fragment>
-      {linkMenuComputer('/', 'Widget')}
+      {linkMenuComputer('/', 'Status')}
+      {linkMenuComputer('/Calendar', 'Calendar')}
     </Fragment>
   );
 
   const guestLeftLinksMobile = (
     <Fragment>
-      {linkMenuMobile('/', 'Widget')}
+      {linkMenuMobile('/', 'Status')}
+      {linkMenuMobile('/Calendar', 'Calendar')}
     </Fragment>
   );
 

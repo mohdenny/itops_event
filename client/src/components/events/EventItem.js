@@ -105,8 +105,9 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
     const currentTableData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
-        return filterEvent.slice(firstPageIndex, lastPageIndex);
-    }, [currentPage, filterEvent]);
+        // return filterEvent.slice(firstPageIndex, lastPageIndex);
+        return events.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage, events]);
 
 
     const renderedList = currentTableData.sort((a, b) => b.date.localeCompare(a.date)).map(event => {
@@ -149,13 +150,13 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {
                         event.status === 'ongoing' ?   
-                            (<button onClick={() => {updateStatus(event._id, {status: 'done'}); setFilterEvent(events);}} type="button" className="ml-2 p-1 bg-gray-500 rounded-md text-white font-semibold hover:bg-gray-800 hover:text-gray-200" >Done</button>) 
+                            (<button onClick={() => {updateStatus(event._id, {status: 'done'})}} type="button" className="ml-2 p-1 bg-gray-500 rounded-md text-white font-semibold hover:bg-gray-800 hover:text-gray-200" >Done</button>) 
                         :
                             (<Link to={`/events/event/${event._id}`} className={`${event.status === 'done' ? 'hidden' : '' } ml-2 p-1 bg-indigo-500 rounded-md text-white hover:bg-indigo-800 hover:text-gray-200`}>Edit</Link>)
                     }
 
                     {
-                        event.status !== 'ongoing' && event.status !== 'done' && <button onClick={() => {deleteEvent(event._id); setFilterEvent(events);}} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white font-semibold hover:bg-red-800 hover:text-gray-200">Delete</button>
+                        event.status !== 'ongoing' && event.status !== 'done' && <button onClick={() => {deleteEvent(event._id)}} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white font-semibold hover:bg-red-800 hover:text-gray-200">Delete</button>
                     }
 
                     <PDFDownloadLink 
@@ -179,11 +180,11 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                         <div className="shadow overflow-hidden border-b border-gray-200 bg-white sm:rounded-lg">
                         <Alert />
                             <div className="grid grid-cols-5 gap-4 justify-items-center mb-2">     
-                                {renderedFilterButton(events, 'new', 'yellow')}
+                                {/* {renderedFilterButton(events, 'new', 'yellow')}
                                 {renderedFilterButton(events, 'upcoming', 'green')}
                                 {renderedFilterButton(events, 'ongoing', 'blue')}
                                 {renderedFilterButton(events, 'done', 'gray')}
-                                {/* <div className="w-full px-3">
+                                <div className="w-full px-3">
                                     <div className="relative w-full ">
                                         <div className="w-auto">
                                             <select value={option.value} onChange={(e) => setOption(e.target.value)} className="inline-block appearance-none w-auto bg-gray-200 border border-gray-200 text-gray-700 py-1.5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
@@ -200,10 +201,10 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                                         </div>
                                     </div>
-                                </div> */}
+                                </div>
                                 <div>
                                     <button className="border rounded-md p-1 bg-red-100 text-red-500 hover:bg-red-800 hover:text-red-200" onClick={() => setFilterEvent(events)} type="button">Clear Filter</button>
-                                </div>
+                                </div> */}
                             </div>
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">

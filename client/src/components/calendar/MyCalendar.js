@@ -19,7 +19,6 @@ const MyCalendar = ({ events }) => {
               localizer={localizer}
               className="bg-red-100 p-4"
               style={{ height: '600px' }} 
-              
             />
         </div>
     );

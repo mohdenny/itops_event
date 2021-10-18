@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
+import Calendar from './components/layout/Calendar';
 import Services from './components/services/Services';
 import Routes from './components/routing/Routes';
 import { LOGOUT } from './actions/types';
@@ -34,6 +35,7 @@ const App = () => {
             <Navbar />
             <Switch>
                 <Route exact path="/" component={Landing} />
+                <Route exact path="/Calendar" component={Calendar} />
                 <Route exact path="/services" component={Services} />
                 <Route component={Routes} />
             </Switch>
