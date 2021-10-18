@@ -24,7 +24,7 @@ router.post(
 
     try {
         const user = await User.findById(req.user.id).select('-password');
-        const { title, description, location, start, end, status }= req.body;
+        const { title, description, note, location, start, end, status }= req.body;
 
         const newEvent = new Event({
             user: req.user.id,
@@ -32,6 +32,7 @@ router.post(
             name: user.name,
             avatar: user.avatar,
             description: description,
+            note: note,
             location: location,
             start: start,
             end: end,
@@ -111,7 +112,7 @@ router.put(
 
         const event = await Event.findById(req.params.id);
         const user = await User.findById(req.user.id).select('-password');
-        const { title, description, location, start, end, status }= req.body;
+        const { title, description, note, location, start, end, status }= req.body;
 
         const updateEvent = {
             user: req.user.id,
@@ -119,6 +120,7 @@ router.put(
             name: user.name,
             avatar: user.avatar,
             description: description,
+            note: note,
             location: location,
             start: start,
             end: end,

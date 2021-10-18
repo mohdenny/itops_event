@@ -18,6 +18,9 @@ const EventSchema = new Schema ({
     description: {
         type: String
     },
+    note: {
+        type: String
+    },
     items: [
         {
             user: {

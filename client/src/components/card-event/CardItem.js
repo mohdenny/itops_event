@@ -17,13 +17,16 @@ const CardItem = ({events, sortText, titleSize, textSize }) => {
                             </div>
                             <pre className={`lg:${textSize} md:text-sm sm:text-xs`}>
                                 <pre>
-                                <b>Start:</b> { `${moment(filteredEvent.start).format("D-MM-YYYY, H:mm")}` }
+                                    <b>Start:</b> { `${moment(filteredEvent.start).format("D-MM-YYYY, H:mm")}` }
                                 </pre>
                                 <pre>
-                                <b>End:</b> { `${moment(filteredEvent.end).format("D-MM-YYYY, H:mm")}` }
+                                    <b>End:</b> { `${moment(filteredEvent.end).format("D-MM-YYYY, H:mm")}` }
                                 </pre>
                                 <pre className="whitespace-normal">
-                                    {filteredEvent.location}
+                                    <b>Note:</b> <br/> {filteredEvent.note}
+                                </pre>
+                                <pre className="whitespace-normal">
+                                    <b>Location:</b> <br/>{filteredEvent.location}
                                 </pre>
                             </pre>
                             { filteredEvent.supports.map(support => {

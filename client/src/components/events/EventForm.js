@@ -10,6 +10,7 @@ import moment from 'moment';
 const initialState = {
     title: '',
     description: '',
+    note: '',
     start: '',
     end: '',
     location: '',
@@ -46,6 +47,7 @@ const EventForm = ({
     const {
         title,
         description,
+        note,
         start,
         end,
         location,
@@ -87,7 +89,7 @@ const EventForm = ({
                                         name="title"
                                         id="title" 
                                         type="text" 
-                                        placeholder="Vaksin Untuk Indonesia" 
+                                        placeholder="Nama Acara" 
                                         value={title}
                                         onChange={onChange}
                                     />
@@ -102,7 +104,7 @@ const EventForm = ({
                                         id="description" 
                                         type="textarea" 
                                         rows="3" 
-                                        placeholder="Event Produksi" 
+                                        placeholder="Deskripsi Acara" 
                                         value={description}
                                         onChange={onChange}
                                     />
@@ -117,7 +119,7 @@ const EventForm = ({
                                         name="location"
                                         id="location" 
                                         type="text" 
-                                        placeholder="Studio 2" 
+                                        placeholder="Lokasi Acara" 
                                         value={location}
                                         onChange={onChange}
                                     />
@@ -150,6 +152,20 @@ const EventForm = ({
                                         value={end}
                                         onChange={onChange}
                                         min={disableThePreviousDay}
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
+                                        Note
+                                    </label>
+                                    <input 
+                                        className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
+                                        name="note"
+                                        id="note" 
+                                        type="text" 
+                                        placeholder="Informasi Tambahan" 
+                                        value={note}
+                                        onChange={onChange}
                                     />
                                 </div>
                                 <div className="mb-4 hidden">

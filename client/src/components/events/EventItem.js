@@ -156,7 +156,7 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                     }
 
                     {
-                        event.status !== 'ongoing' && event.status !== 'done' && <button onClick={() => {deleteEvent(event._id)}} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white font-semibold hover:bg-red-800 hover:text-gray-200">Delete</button>
+                        event.status !== 'ongoing' && <button onClick={() => {deleteEvent(event._id)}} type="button" className="ml-2 p-1 bg-red-500 rounded-md text-white font-semibold hover:bg-red-800 hover:text-gray-200">Delete</button>
                     }
 
                     <PDFDownloadLink 
