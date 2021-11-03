@@ -98,7 +98,7 @@ const EventForm = ({
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                                         Description
                                     </label>
-                                    <input 
+                                    <textarea 
                                         className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
                                         name="description"
                                         id="description" 
@@ -112,15 +112,15 @@ const EventForm = ({
                                 
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
-                                        Location
+                                        Note
                                     </label>
                                     <input 
                                         className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
-                                        name="location"
-                                        id="location" 
+                                        name="note"
+                                        id="note" 
                                         type="text" 
-                                        placeholder="Lokasi Acara" 
-                                        value={location}
+                                        placeholder="Informasi Tambahan" 
+                                        value={note}
                                         onChange={onChange}
                                     />
                                 </div>
@@ -156,15 +156,15 @@ const EventForm = ({
                                 </div>
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="location">
-                                        Note
+                                        Location
                                     </label>
                                     <input 
                                         className="shadow border-gray-400 hover:border-gray-500 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight mb-3 focus:outline-none focus:shadow-outline"
-                                        name="note"
-                                        id="note" 
+                                        name="location"
+                                        id="location" 
                                         type="text" 
-                                        placeholder="Informasi Tambahan" 
-                                        value={note}
+                                        placeholder="Lokasi Acara" 
+                                        value={location}
                                         onChange={onChange}
                                     />
                                 </div>

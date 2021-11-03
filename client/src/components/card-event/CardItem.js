@@ -29,13 +29,16 @@ const CardItem = ({events, sortText, titleSize, textSize }) => {
                                     <b>Location:</b> <br/>{filteredEvent.location}
                                 </pre>
                             </pre>
-                            { filteredEvent.supports.map(support => {
-                                return (
-                                    <pre className={`lg:${textSize} md:text-sm sm:text-xs`} key={support.id}>
-                                        <b>Support:</b> {support.name_support}
-                                    </pre>
-                                )
-                            }) }
+                            <pre className={`lg:${textSize} md:text-sm sm:text-xs`}>
+                                <b>Support:</b> 
+                                { filteredEvent.supports.map(support => {
+                                    return (
+                                        <pre className={`lg:${textSize} md:text-sm sm:text-xs`} key={support._id}>
+                                            {support.name_support}
+                                        </pre>
+                                    )
+                                }) }
+                            </pre>
                         </div>
                     );
                 });

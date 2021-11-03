@@ -88,7 +88,7 @@ const PdfDocument = ({ event }) => (
                 </View>
             </View>
             <Text style={styles.footer} fixed>
-                IT Event Note
+                IT Ops Event
             </Text>
         </Page>
     </Document>

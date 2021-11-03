@@ -13,27 +13,12 @@ const Services = ({ events , updateStatus }) => {
         return moment().format(format)
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const setUpcomingStatus = datas => {
-        datas.forEach(data => {
-            if(data.status !== 'upcoming' && data.status === 'new'){
-                if( eventDate(data.start, 'd') >= localDate('d') ) {
-                    if( eventDate(data.start, 'M') >= localDate('M') ) {
-                        if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
-                            if( data.items.length > 0 && data.supports.length > 0) {
-                                updateStatus(data._id, {status: 'upcoming'})
-                            } 
-                        }
-                    }
-                } 
-            }
-        })
-    }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const setNewStatus = datas => {
         datas.forEach(data => {
             if(data.status === '' || data.status === 'upcoming'){
-                if( eventDate(data.start, 'd') >= localDate('d') ) {
+                if( eventDate(data.start, 'D') >= localDate('d') || eventDate(data.start, 'D') <= localDate('d') ) {
                     if( eventDate(data.start, 'M') >= localDate('M') ) {
                         if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
                             if( data.items.length === 0 || data.supports.length === 0) {
@@ -47,10 +32,27 @@ const Services = ({ events , updateStatus }) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    const setUpcomingStatus = datas => {
+        datas.forEach(data => {
+            if(data.status !== 'upcoming' && data.status === 'new'){
+                if( eventDate(data.start, 'D') >= localDate('d') || eventDate(data.start, 'D') <= localDate('d') ) {
+                    if( eventDate(data.start, 'M') >= localDate('M') ) {
+                        if( eventDate(data.start, 'YYYY') >= localDate('YYYY') ) {
+                            if( data.items.length > 0 && data.supports.length > 0) {
+                                updateStatus(data._id, {status: 'upcoming'})
+                            } 
+                        }
+                    }
+                } 
+            }
+        })
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const setOngoingStatus = datas => {
         datas.forEach(data => {
             if(data.status !== 'ongoing' && data.status === 'upcoming' ){
-                if( eventDate(data.start, 'd') <= localDate('d') ) {
+                if( eventDate(data.start, 'D') <= localDate('d') ) {
                     if( eventDate(data.start, 'M') <= localDate('M') ) {
                         if( eventDate(data.start, 'YYYY') <= localDate('YYYY') ) {
                             if( eventDate(data.start, 'H') <= localDate('H') ) {

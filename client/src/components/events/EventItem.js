@@ -113,40 +113,6 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
     const renderedList = currentTableData.sort((a, b) => b.date.localeCompare(a.date)).map(event => {
         return (
             <tr key={event._id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                        <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                                <Link to={`/events/${event._id}`} className="text-base hover:text-gray-500">
-                                    {event.title}
-                                </Link>
-                                
-                                {warningRequired(event, 'yellow', 'Items and Support are required!')}
-                                {warningStatus(event, 'upcoming', 'green', 'This event is Upcoming!')}
-                                {warningStatus(event, 'ongoing', 'blue', 'Cannot be edited during this event Ongoing!')}
-                                {warningStatus(event, 'done', 'gray', 'This event has ended!')}
-                            </div>
-                        </div>
-                    </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{ `Start: ${formatDate(event.start)}` } </div>
-                    <div className="text-sm text-gray-900">{ `End: ${formatDate(event.end)}` } </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {event.location}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`${setColorStatus(event.status)} px-2 inline-flex text-xs leading-5 font-semibold rounded-full`}>
-                        {event.status}
-                    </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{formatDate(event.date)} </div>
-                </td>
-                {/* <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{event.edited === null ? '-' : formatDate(event.edited)} </div>
-                </td> */}
                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {
                         event.status === 'ongoing' ?   
@@ -168,6 +134,40 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                     </PDFDownloadLink >
                     
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                        <div className="ml-4">
+                            <div className="text-sm font-medium text-gray-900">
+                                <Link to={`/events/${event._id}`} className="text-base hover:text-gray-500">
+                                    {event.title}
+                                </Link>
+                                
+                                {warningRequired(event, 'yellow', 'Items and Support are required!')}
+                                {warningStatus(event, 'upcoming', 'green', 'This event is Upcoming!')}
+                                {warningStatus(event, 'ongoing', 'blue', 'Cannot be edited during this event Ongoing!')}
+                                {warningStatus(event, 'done', 'gray', 'This event has ended!')}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`${setColorStatus(event.status)} px-2 inline-flex text-xs leading-5 font-semibold rounded-full`}>
+                        {event.status}
+                    </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{ `Start: ${formatDate(event.start)}` } </div>
+                    <div className="text-sm text-gray-900">{ `End: ${formatDate(event.end)}` } </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-">
+                    {event.location}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{formatDate(event.date)} </div>
+                </td>
+                {/* <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{event.edited === null ? '-' : formatDate(event.edited)} </div>
+                </td> */}
             </tr>
         )
     })
@@ -209,8 +209,14 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
+                                        <th scope="col" className="relative px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            <span>Action</span>
+                                        </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Title
+                                        </th>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Status
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Schedule
@@ -219,17 +225,11 @@ const EventItem = ({ events, updateStatus, deleteEvent }) => {
                                             Location
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Created
                                         </th>
                                         {/* <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Edited
                                         </th> */}
-                                        <th scope="col" className="relative px-6 py-3">
-                                            <span className="sr-only">Edit</span>
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
