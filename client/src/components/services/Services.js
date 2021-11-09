@@ -18,7 +18,7 @@ const Services = ({ events , updateStatus }) => {
     const setNewStatus = datas => {
         datas.forEach(data => {
             if(data.status === '' || data.status === 'upcoming'){
-                if( parseInt(eventDate(data.start, 'D')) >= parseInt(localDate('d'))) {
+                if( parseInt(eventDate(data.start, 'D')) >= parseInt(localDate('D'))) {
                     if( parseInt(eventDate(data.start, 'M')) >= parseInt(localDate('M')) ) {
                         if( parseInt(eventDate(data.start, 'YYYY')) >= parseInt(localDate('YYYY')) ) {
                             if( data.items.length === 0 || data.supports.length === 0) {
@@ -35,7 +35,7 @@ const Services = ({ events , updateStatus }) => {
     const setUpcomingStatus = datas => {
         datas.forEach(data => {
             if(data.status !== 'upcoming' && data.status === 'new'){
-                if( parseInt(eventDate(data.start, 'D')) >= parseInt(localDate('d'))) {
+                if( parseInt(eventDate(data.start, 'D')) >= parseInt(localDate('D'))) {
                     if( parseInt(eventDate(data.start, 'M')) >= parseInt(localDate('M')) ) {
                         if( parseInt(eventDate(data.start, 'YYYY')) >= parseInt(localDate('YYYY')) ) {
                             if( data.items.length > 0 && data.supports.length > 0) {
@@ -52,7 +52,7 @@ const Services = ({ events , updateStatus }) => {
     const setOngoingStatus = datas => {
         datas.forEach(data => {
             if(data.status !== 'ongoing' && data.status === 'upcoming' ){
-                if( parseInt(eventDate(data.start, 'D')) <= parseInt(localDate('d')) ) {
+                if( parseInt(eventDate(data.start, 'D')) <= parseInt(localDate('D')) ) {
                     if( parseInt(eventDate(data.start, 'M')) <= parseInt(localDate('M')) ) {
                         if( parseInt(eventDate(data.start, 'YYYY')) <= parseInt(localDate('YYYY')) ) {
                             if( parseInt(eventDate(data.start, 'H')) <= parseInt(localDate('H')) ) {
